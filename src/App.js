@@ -19,7 +19,6 @@ function App() {
     <div className="app-container">
       <Navbar />
 
-      <div className="p-5 border border-primary">
         <Switch>
           
           <NotAuthenticatedRoute  exact path="/chat/:id" component={Chat}/>
@@ -32,7 +31,7 @@ function App() {
           <NotAuthenticatedRoute  exact path="/signup" component={Signup}/>
           <NotAuthenticatedRoute exact path="/" component={Home}/>
         </Switch>
-      </div>
+
     </div>
   );
 }
