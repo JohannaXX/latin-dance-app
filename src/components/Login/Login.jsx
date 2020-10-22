@@ -127,7 +127,7 @@ const Login = () => {
             <div id="social-login-area">
                 <div id="social-login-btns">
                     <a href="/auth/google"><i class="fa fa-google"></i> Log in with Google</a>
-                    <a href="#"><i class="fa fa-google"></i> Log in with Facebook</a>
+                    <a href="https://google.com"><i class="fa fa-google"></i> Log in with Facebook</a>
                     <a href="/auth/slack"><i class="fa fa-slack"></i> Log in with Slack</a>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { /* Route, */ Switch } from 'react-router-dom';
 import AuthenticatedRoute, { NotAuthenticatedRoute } from './components/AuthenticatedRoute/AuthenticatedRoute';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
@@ -21,15 +21,15 @@ function App() {
 
         <Switch>
           
-          <NotAuthenticatedRoute  exact path="/chat/:id" component={Chat}/>
-          <NotAuthenticatedRoute  exact path="/chats" component={ChatList}/>
-          <NotAuthenticatedRoute  exact path="/post/:id" component={PostDetail}/>
-          <NotAuthenticatedRoute  exact path="/network" component={Network}/>
-          <NotAuthenticatedRoute  exact path="/contacts" component={Contacts}/>
-          <NotAuthenticatedRoute  exact path="/user/:id" component={Profile}/>
+          <AuthenticatedRoute  exact path="/chat/:id" component={Chat}/>
+          <AuthenticatedRoute  exact path="/chats" component={ChatList}/>
+          <AuthenticatedRoute  exact path="/post/:id" component={PostDetail}/>
+          <AuthenticatedRoute  exact path="/network" component={Network}/>
+          <AuthenticatedRoute  exact path="/contacts" component={Contacts}/>
+          <AuthenticatedRoute  exact path="/user/:id" component={Profile}/>
           <NotAuthenticatedRoute  exact path="/login" component={Login}/>
           <NotAuthenticatedRoute  exact path="/signup" component={Signup}/>
-          <NotAuthenticatedRoute exact path="/" component={Home}/>
+          <AuthenticatedRoute exact path="/" component={Home}/>
         </Switch>
 
     </div>

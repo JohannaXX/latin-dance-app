@@ -22,7 +22,7 @@ const Profile = () => {
                                         <p className="small"> <i className="fa fa-map-marker mr-2"></i>Madrid | ES</p>
                                     </div>
                                    
-                                    <a href="#" className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
+                                    <a href="https://google.com" className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
                                 </div>
                             </div>
                         </div>
@@ -43,14 +43,14 @@ const Profile = () => {
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                             </p>
                             <div>
-                                <span className="tag bg-secondary rounded text-white mr-1">#salsacubana</span>
-                                <span className="tag bg-secondary rounded text-white mr-1">#bachata</span>
+                                <span className="tag bg-secondary rounded text-white mr-1">https://google.comsalsacubana</span>
+                                <span className="tag bg-secondary rounded text-white mr-1">https://google.combachata</span>
                             </div>
                         </div>
 
                         <div className="py-4 px-4">
                             <div className="d-flex align-items-center justify-content-between mb-3">
-                                <h5 className="mb-0">Recent photos</h5><a href="#" className="btn btn-link text-muted">Show all</a>
+                                <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
                             <div className="row">
                                 <div className="col-lg-6 mb-2 pr-lg-1"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556294928/nicole-honeywill-546848-unsplash_ymprvp.jpg" alt="" className="img-fluid rounded shadow-sm"/></div>
@@ -60,7 +60,7 @@ const Profile = () => {
                             </div>
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
-                                    <h5 className="mb-0">Recent photos</h5><a href="#" className="btn btn-link text-muted">Show all</a>
+                                    <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                                 </div>
                                 <div className="p-4 bg-light rounded shadow-sm">
                                     <p className="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>

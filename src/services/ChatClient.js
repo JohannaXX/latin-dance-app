@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const http = axios.create({
     baseURL: /* process.env.REACT_APP_API_URL || */ 'http://localhost:3000',
     withCredentials: true
-})
+});
 
 http.interceptors.response.use(function(response) {
     return response.data;
@@ -16,4 +16,6 @@ http.interceptors.response.use(function(response) {
     return Promise.reject(error);
 });
 
-export const login = ({ email, password }) => http.post('/login', { email, password })
+export const getChatList = (limit) => http.get('/chats', {params: {limit}});
+
+export const getChat = (id) => http.get(`/chat/${id}`);
