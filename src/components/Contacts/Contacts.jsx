@@ -1,122 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect, cleanup } from 'react';
 import './Contact.css';
+import { getContacts } from '../../services/UserClient';
+import Contact from './Contact';
 
 const Contacts = () => {
-  return (
-    <div className="contacts-container">
-        
+    const [ contactRequests, setContactRequests ] = useState([])
+    const [ contactMatches, setContactMatches ] = useState([])
+    const [ error, setError ] = useState(null)
 
+    useEffect(() => {
+        const getAllPosts = async () => {
+            try {
+                const allContacts = await getContacts();
+                const userRequests = allContacts.users.sort( (a,b) => ( a.name > b.name ) ? 1 : -1 );;
+                const userMatches = allContacts.matches.sort( (a,b) => ( a.users[0].name > b.users[0].name ) ? 1 : -1 );
+
+                setContactRequests(userRequests);
+                setContactMatches(userMatches);
+            } catch(err) {
+                setError(err.response?.data?.message);
+            }
+        }
+        getAllPosts();
+
+        return () =>  cleanup 
+    }, [])
+
+    if (contactRequests.length === 0 && contactMatches.length === 0) {
+        return <div className="text-center">Loading...</div>
+    } 
+
+    if (error) {
+        return error
+    } 
+
+    return (
+        <div className="contacts-container">
             <div className="row">
                 <div className="col-md-8 m-auto">
                     <div className="all-contacts ">
-                    
-                    <div className="user-card align-center">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-3 text-center">
-                                <a className="align-center" href="https://google.com" >
-                                    <span className="w-80 avatar gd-primary m-auto">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="."/>
-                                    </span>
-                                </a>
-                                <div className="mt-2">
-                                    <p className="text-muted">Madrid  |  ES</p>
-                                </div>
-                            </div>
-                            <div className="col-md-7 col-sm-7">
-                                <a href="https://google.com" className="profile-link">
-                                    <h5>Sophia Page</h5>
-                                </a>
-                                <p className="text-muted">Salsa cubana - 2 years experience</p>
-                                <p >Something about me bla bla bla bla bla</p>
-                            </div>
-                            <div className="col-md-2 col-sm-2 text-center">
-                                <button className="btn btn-primary m-auto">Add</button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className="user-card align-center">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-3 text-center">
-                                <a className="align-center" href="https://google.com" >
-                                    <span className="w-80 avatar gd-primary m-auto">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="."/>
-                                    </span>
-                                </a>
-                                <div className="mt-2">
-                                    <p className="text-muted">Madrid  |  ES</p>
-                                </div>
-                            </div>
-                            <div className="col-md-7 col-sm-7">
-                                <a href="https://google.com" className="profile-link">
-                                    <h5>Sophia Page</h5>
-                                </a>
-                                <p className="text-muted">Salsa cubana - 2 years experience</p>
-                                <p >Something about me bla bla bla bla bla</p>
-                            </div>
-                            <div className="col-md-2 col-sm-2 text-center">
-                                <button className="btn btn-primary m-auto">Add</button>
-                            </div>
-                        </div>
-                    </div>
+                        { contactRequests.map( c => {
+                            return (
+                                <Contact 
+                                    id = { c.id }
+                                    avatar = { c.avatar }
+                                    name = { c.name }
+                                    bio = { c.bio }
+                                    style = { c.style }
+                                    btnAction = 'Accept'
+                                />
+                            )
+                        })}
 
-                    <div className="user-card align-center">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-3 text-center">
-                                <a className="align-center" href="https://google.com" >
-                                    <span className="w-80 avatar gd-primary m-auto">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="."/>
-                                    </span>
-                                </a>
-                                <div className="mt-2">
-                                    <p className="text-muted">Madrid  |  ES</p>
-                                </div>
-                            </div>
-                            <div className="col-md-7 col-sm-7">
-                                <a href="https://google.com" className="profile-link">
-                                    <h5>Sophia Page</h5>
-                                </a>
-                                <p className="text-muted">Salsa cubana - 2 years experience</p>
-                                <p >Something about me bla bla bla bla bla</p>
-                            </div>
-                            <div className="col-md-2 col-sm-2 text-center">
-                                <button className="btn btn-primary m-auto">Add</button>
-                            </div>
-                        </div>
-                    </div>
+                        <hr/>
 
-                    <div className="user-card align-center">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-3 text-center">
-                                <a className="align-center" href="https://google.com" >
-                                    <span className="w-80 avatar gd-primary m-auto">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="."/>
-                                    </span>
-                                </a>
-                                <div className="mt-2">
-                                    <p className="text-muted">Madrid  |  ES</p>
-                                </div>
-                            </div>
-                            <div className="col-md-7 col-sm-7">
-                                <a href="https://google.com" className="profile-link">
-                                    <h5>Sophia Page</h5>
-                                </a>
-                                <p className="text-muted">Salsa cubana - 2 years experience</p>
-                                <p >Something about me bla bla bla bla bla</p>
-                            </div>
-                            <div className="col-md-2 col-sm-2 text-center">
-                                <button className="btn btn-primary m-auto">Add</button>
-                            </div>
-                        </div>
-                    </div>
-
+                        { contactMatches.map( c => {
+                            return (
+                                <Contact 
+                                    id = { c.users[0].id }
+                                    avatar = { c.users[0].avatar }
+                                    name = { c.users[0].name }
+                                    bio = { c.users[0].bio }
+                                    style = { c.users[0].style }
+                                />
+                            )
+                        })}
+                        
                     </div>
                 </div>
             </div>
-
-
-    </div>
-  );
+        </div>
+    );
 }
 
 export default Contacts;

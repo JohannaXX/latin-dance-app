@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect, cleanup } from 'react';
+import { getUser } from '../../services/UserClient';
 import './Profile.css';
 
-const Profile = () => {
+const Profile = (props) => {
+    const [ thisUser, setThisUser ] = useState({})
+    const [ error, setError ] = useState(null)
+
+    useEffect(() => {
+        
+        const getThisUser = async () => {
+            try {
+                const profile = await getUser(props.match.params.id)
+                console.log(profile)
+                setThisUser(profile);
+            } catch(err) {
+                setError(err.response?.data?.message);
+            }
+        }
+        getThisUser();
+
+        return () =>  cleanup 
+    }, [])
+
+    if (thisUser.length === 0) {
+        return <div className="text-center">Loading...</div>
+    } 
+
+    if (error) {
+        return error
+    } 
+
     return (
         <div classNameNameName="profile-container">
 
@@ -18,7 +46,7 @@ const Profile = () => {
                                 </span>
                                 <div className="media-body mb-2 text-white profile-card-header ">
                                     <div>
-                                        <h4 className="mt-1 mr-3 d-inline">Manuella Tarly Schmitter</h4>
+                                        <h4 className="mt-1 mr-3 d-inline">{ thisUser.name }</h4>
                                         <p className="small"> <i className="fa fa-map-marker mr-2"></i>Madrid | ES</p>
                                     </div>
                                    
@@ -43,8 +71,7 @@ const Profile = () => {
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                             </p>
                             <div>
-                                <span className="tag bg-secondary rounded text-white mr-1">https://google.comsalsacubana</span>
-                                <span className="tag bg-secondary rounded text-white mr-1">https://google.combachata</span>
+                                <span className="tag bg-secondary rounded text-white mr-1">salsacubana</span>
                             </div>
                         </div>
 

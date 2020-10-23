@@ -10,7 +10,7 @@ const ChatList = () => {
         const getAllChats = async () => {
             try {
                 const chatList = await getChatList();
-                console.log(chatList)
+                /* console.log(chatList) */
                 setContacts(chatList.chats);
             } catch(err) {
                 setError(err.response?.data?.message);

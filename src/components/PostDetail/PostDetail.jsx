@@ -1,11 +1,7 @@
 import React from 'react';
 
-const Post = () => {
-  return (
-    <div className="post-container">
-      Post
-    </div>
-  );
+const PostDetail = () => {
+    return <div>Post details</div>
 }
 
-export default Post;
+export default PostDetail;

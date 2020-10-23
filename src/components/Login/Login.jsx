@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { login } from '../../services/ApiClient';
+import { login } from '../../services/UserClient';
 
 const validations = {
     email: v => v.length,
