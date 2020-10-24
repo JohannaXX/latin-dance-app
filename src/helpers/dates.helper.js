@@ -12,7 +12,9 @@ export const timeUntilNow = ( givenDate ) => {
         return `${Math.floor(seconds/ 60)} minutes ago`
     
     } else if (seconds < (60*60*24)) {
-        if (date1.getDay() === date2.getDay() ) {
+        const day1 = new Date(date1)
+        const day2 = new Date(date2)
+        if (day1.getDay() === day2.getDay() ) {
             return `${Math.floor(seconds/ (60*60))} hours ago`
         }
     } else {

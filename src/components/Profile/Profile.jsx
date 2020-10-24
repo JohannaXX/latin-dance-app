@@ -2,6 +2,7 @@ import React, { useState, useEffect, cleanup } from 'react';
 import { getUser } from '../../services/UserClient';
 import './Profile.css';
 import ProfilePost from './components/ProfilePost';
+import PhotoGallery from './components/PhotoGallery';
 
 const Profile = (props) => {
     const [ user, setUser ] = useState({})
@@ -44,12 +45,12 @@ const Profile = (props) => {
                             <div className="media  profile-header">
                                 
                                 <span className="profile-image avatar w-120 mr-2">
-                                    <img className="" src="https://d19m59y37dris4.cloudfront.net/university/1-1-1/img/teacher-4.jpg" alt="..."/>
+                                    <img className="" src={ user.avatar } alt="..."/>
                                 </span>
                                 <div className="media-body mb-2 text-white profile-card-header ">
                                     <div>
                                         <h4 className="mt-1 mr-3 d-inline">{ user.name }</h4>
-                                        <p className="small"> <i className="fa fa-map-marker mr-2"></i>Madrid | ES</p>
+                                        <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
                                     </div>
                                     { user.id !== me.id ? null : (
                                         <a href="https://google.com" className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
@@ -80,12 +81,8 @@ const Profile = (props) => {
                             <div className="d-flex align-items-center justify-content-between mb-3">
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
-                            {/* <div className="row">
-                                <div className="col-lg-6 mb-2 pr-lg-1"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556294928/nicole-honeywill-546848-unsplash_ymprvp.jpg" alt="" className="img-fluid rounded shadow-sm"/></div>
-                                <div className="col-lg-6 mb-2 pl-lg-1"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556294927/dose-juice-1184444-unsplash_bmbutn.jpg" alt="" className="img-fluid rounded shadow-sm"/></div>
-                                <div className="col-lg-6 pr-lg-1 mb-2"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556294926/cody-davis-253925-unsplash_hsetv7.jpg" alt="" className="img-fluid rounded shadow-sm"/></div>
-                                <div className="col-lg-6 pl-lg-1"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556294928/tim-foster-734470-unsplash_xqde00.jpg" alt="" className="img-fluid rounded shadow-sm"/></div>
-                            </div> */}
+
+                            <PhotoGallery images = { user.gallery }/>
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                     <h5 className="mb-0">Recent posts</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>

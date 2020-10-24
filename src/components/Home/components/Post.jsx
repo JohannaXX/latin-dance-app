@@ -2,18 +2,18 @@ import React from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import Comment from './Comment';
 
-const Post = ({id, user, body, image, likes, comments, createdAt, updatedAt}) => {
+const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
     
     return (
         <div className="media-block">
 
-            <a className="media-left avatar mr-2" href={"/user/" + id}>
+            <a className="media-left avatar mr-2" href={"/user/" + user.id}>
                 <img className="w-48 img-circle img-sm" alt="..." src={ user.avatar } />
             </a>
 
             <div className="media-body">
                 <div className="mar-btm">
-                    <a href={"/user/" + id} className="btn-link text-semibold media-heading box-inline">{ user.name }</a>
+                    <a href={"/user/" + user.id} className="btn-link text-semibold media-heading box-inline">{ user.name }</a>
                     <p className="text-muted text-sm">{ timeUntilNow(createdAt) }</p>
                 </div>
 
@@ -21,7 +21,7 @@ const Post = ({id, user, body, image, likes, comments, createdAt, updatedAt}) =>
                 {/* <div>{ !image ? null : <img src={image} alt="..."/> }</div> */}
 
                 <div className="mt-1">
-                    <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0 small text-mute">
+                    <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0">
                         <i className="fa fa-heart-o"></i> &nbsp;{ likes.length } Likes &nbsp;| 
                     </a>
                     <a className="btn btn-sm btn-default btn-hover-primary ml-2" href="https://google.com">
@@ -34,7 +34,6 @@ const Post = ({id, user, body, image, likes, comments, createdAt, updatedAt}) =>
                 { comments.map( c => {
                     return (
                         <Comment 
-                            id = { c.id }
                             user = { c.user }
                             text = { c.text }
                             createdAt = { c.createdAt }

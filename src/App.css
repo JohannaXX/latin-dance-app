@@ -18,6 +18,12 @@
   height: 150px !important
 }
 
+.w-photo {
+  max-width: 280px;
+  height: auto;
+  background-repeat: no-repeat;
+}
+
 .avatar {
   position: relative;
   line-height: 1;
