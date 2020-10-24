@@ -63,47 +63,9 @@ const Home = () => {
                                     />    
                                 ) 
                             })}
-                        
-                            {/* <div className="media-block">
 
-                                <a className="media-left avatar mr-2" href="https://google.com">
-                                    <img className="w-48 img-circle img-sm" alt="..." src="https://bootdey.com/img/Content/avatar/avatar1.png" />
-                                </a>
-
-                                <div className="media-body">
-                                    <div className="mar-btm">
-                                        <a href="https://google.com" className="btn-link text-semibold media-heading box-inline">Lisa D.</a>
-                                        <p className="text-muted text-sm">11:07 - Today </p>
-                                    </div>
-                                    <div>consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</div>
-                                    <div className="mt-1">
-                                        <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0"><i className="fa fa-heart-o text-secondary"></i> 250 Likes</a>
-                                        <a className="btn btn-sm btn-default btn-hover-primary ml-2" href="https://google.com"><u>Comments</u></a>
-                                    </div>
-                                    <hr />
-
-
-                                    <div>
-                                        <div className="media-block">
-                                            <a className="media-left avatar mr-2" href="https://google.com"><img className="w-48 img-circle img-sm" alt="..." src="https://bootdey.com/img/Content/avatar/avatar2.png" /></a>
-                                            <div className="media-body">
-                                                <div className="mar-btm">
-                                                    <a href="https://google.com" className="btn-link text-semibold media-heading box-inline">Bobby Marz</a>
-                                                    <p className="text-muted text-sm">7 min ago</p>
-                                                </div>
-                                                <div>Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</div>
-
-                                                <hr />
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div> */}
-
-
-                            <div className="media-block pad-all">
+                            {/* WITH IMAGE */}
+                            {/* <div className="media-block pad-all">
                                 <a className="media-left" href="https://google.com"><img className="img-circle img-sm" alt="...e" src="https://bootdey.com/img/Content/avatar/avatar1.png" /></a>
                                 <div className="media-body">
                                     <div className="mar-btm">
@@ -127,7 +89,7 @@ const Home = () => {
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
