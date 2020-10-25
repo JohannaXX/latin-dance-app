@@ -24,6 +24,14 @@
   background-repeat: no-repeat;
 }
 
+.w-photo-home {
+  max-width: 400px;
+  min-height: 300px;
+  max-height: 500px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .avatar {
   position: relative;
   line-height: 1;
@@ -78,4 +86,46 @@
   color: #fff;
   border: none;
   background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
+}
+
+ /* **** SEARCH INPUT AREA **** */
+
+.headind_srch { 
+  padding: 10px 15px 10px 15px; 
+  overflow:hidden; 
+  border-bottom:1px solid #c4c4c4;
+}
+
+.recent_heading {
+  float: left; width:35%;
+}
+
+.recent_heading h4 {
+  color: black;
+  font-size: 21px;
+  margin: auto;
+}
+
+.srch_bar {
+  float: right;
+  text-align: right;
+}
+
+.srch_bar input { 
+  border:1px solid #cdcdcd; 
+  border-width:0 0 1px 0; 
+  width:100%; 
+  padding:2px 0 4px 6px; 
+  background:none;
+}
+
+.srch_bar .input-group-addon button {
+background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+border: medium none;
+padding: 0;
+color: #707070;
+font-size: 18px;
+}
+.srch_bar .input-group-addon { 
+  margin: 0 0 0 -18px;
 }

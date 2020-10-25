@@ -1,5 +1,6 @@
 import React from 'react';
-import './Chat.css';
+import { timeUntilNow } from '../../helpers/dates.helper';
+import './Message.css';
 
 
 const Message = ({type, avatar, text, date}) => {
@@ -9,7 +10,7 @@ const Message = ({type, avatar, text, date}) => {
             <div className="outgoing_msg">
                 <div className="sent_msg">
                     <p>{ text }</p>
-                    <span className="time_date text-muted">{ date }</span> 
+                    <span className="time_date text-muted">{ timeUntilNow(date) }</span> 
                 </div>
             </div> 
         )
@@ -25,7 +26,7 @@ const Message = ({type, avatar, text, date}) => {
             <div className="received_msg">
                 <div className="received_withd_msg">
                     <p>{ text }</p>
-                    <span className="time_date text-muted no-wrap">{ date }</span>
+                    <span className="time_date text-muted no-wrap">{ timeUntilNow(date) }</span>
                 </div>
             </div>
         </div>

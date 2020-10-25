@@ -1,5 +1,5 @@
 import React, { useState, useEffect, cleanup } from 'react';
-import './Contact.css';
+import './Contacts.css';
 import { getContacts } from '../../services/UserClient';
 import Contact from './Contact';
 
@@ -38,6 +38,21 @@ const Contacts = () => {
         <div className="contacts-container">
             <div className="row">
                 <div className="col-md-8 m-auto">
+
+                    <div className="headind_srch">
+                        <div className="recent_heading">
+                            <h4>Contacts</h4>
+                        </div>
+                        <div className="srch_bar">
+                            <div className="stylish-input-group">
+                                <input type="text" className="search-bar"  placeholder="Search..."></input>
+                                <span className="input-group-addon mr-0">
+                                    <button className="" type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                </span> 
+                            </div>
+                        </div>
+                    </div>
+
                     <div className="all-contacts ">
 
                         { contactRequests.map( c => {
@@ -46,6 +61,8 @@ const Contacts = () => {
                                     id = { c.id }
                                     avatar = { c.avatar }
                                     name = { c.name }
+                                    city = { c.city }
+                                    country = { c.country }
                                     bio = { c.bio }
                                     style = { c.style }
                                     btnAction = 'Accept'
@@ -61,6 +78,8 @@ const Contacts = () => {
                                     id = { c.users[0].id }
                                     avatar = { c.users[0].avatar }
                                     name = { c.users[0].name }
+                                    city = { c.users[0].city }
+                                    country = { c.users[0].country }
                                     bio = { c.users[0].bio }
                                     style = { c.users[0].style }
                                 />

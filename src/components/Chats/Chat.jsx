@@ -14,7 +14,6 @@ const Chat = (props) => {
         const getThisChat = async () => {
             try {
                 const thisChat = await getChat(props.match.params.id);
-                //console.log(thisChat.members[0])
                 setChat(thisChat);
                 setContact(thisChat.members[0]);
                 
@@ -39,12 +38,21 @@ const Chat = (props) => {
     return (
         <div className="chat-container">
             <div className="row">
-                <div className="col-sm-8 shadow mt-5 rounded chat-main">
+                <div className="col-sm-8 shadow mt-2 rounded chat-main">
                     <div className="messaging">
                         <div className="inbox_msg">
                             <div className="mesgs">
-                                <div className="msg_history">
 
+                                <div className="type_msg m-3">
+                                    <div className="input_msg_write">
+                                        <textarea type="text" className="write_msg" placeholder="Type a message"></textarea>
+                                        <button className="msg_send_btn" type="button">
+                                            <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="msg_history">
                                     { chat.messages.map(m => {
                                         if (m.sender === contact.id) {
                                             return (
@@ -63,15 +71,6 @@ const Chat = (props) => {
                                                 />)
                                         }
                                     })}
-
-                                </div>
-                                <div className="type_msg">
-                                    <div className="input_msg_write">
-                                        <input type="text" className="write_msg" placeholder="Type a message" />
-                                        <button className="msg_send_btn" type="button">
-                                            <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>

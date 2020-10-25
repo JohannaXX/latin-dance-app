@@ -1,6 +1,7 @@
 import React from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import Comment from './Comment';
+import './Post.css';
 
 const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
     
@@ -12,13 +13,16 @@ const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
             </a>
 
             <div className="media-body">
-                <div className="mar-btm">
+                <div>
                     <a href={"/user/" + user.id} className="btn-link text-semibold media-heading box-inline">{ user.name }</a>
                     <p className="text-muted text-sm">{ timeUntilNow(createdAt) }</p>
                 </div>
 
                 <div>{ body }</div>
-                {/* <div>{ !image ? null : <img src={image} alt="..."/> }</div> */}
+
+                { !image ? null : (
+                   <div className="py-2 m-auto w-photo-home" style={{background: `url(${ image })`}}></div>
+                ) }
 
                 <div className="mt-1">
                     <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0">

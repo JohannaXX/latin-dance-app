@@ -33,21 +33,39 @@ const Home = () => {
     return (
         <div className="home-container bootdey">
 
-
             <div className="row ">
-                <div className="col-sm-8 shadow mx-auto bootstrap snippets post-feed mt-5">
-                    <div className="panel">
-                        <div className="panel-body">
+                <div className="col-sm-8 shadow mx-auto bootstrap snippets post-feed mt-2">
+                    <div className="panel m-0">
+                        <div className="panel-body p-3">
                             <textarea className="form-control" rows="2" placeholder="What are you thinking?"></textarea>
-                            <div className="mar-top clearfix">
+                            <div className=" clearfix">
                                 <button className="btn btn-sm btn-primary pull-right" type="submit">
                                     <i className="fa fa-pencil fa-fw"></i> Share
-                            </button>
+                                </button>
                                 <a className="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="https://google.com"> </a>
                                 <a className="btn btn-trans btn-icon fa fa-camera add-tooltip" href="https://google.com"> </a>
                             </div>
                         </div>
                     </div>
+
+                    <div className="panel bg-light">
+                        <div className="panel-body pt-3 pb-5">
+                            <div className="recent_heading">
+                                <h4>Home</h4>
+                            </div>
+                            <div className="srch_bar">
+                                <div className="stylish-input-group">
+                                    <input type="text" className="search-bar"  placeholder="Search..."></input>
+                                    <span className="input-group-addon">
+                                    <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                    </span> 
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+
+
                     <div className="panel">
                         <div className="panel-body">
                             { posts.map(p => {
@@ -64,32 +82,7 @@ const Home = () => {
                                 ) 
                             })}
 
-                            {/* WITH IMAGE */}
-                            {/* <div className="media-block pad-all">
-                                <a className="media-left" href="https://google.com"><img className="img-circle img-sm" alt="...e" src="https://bootdey.com/img/Content/avatar/avatar1.png" /></a>
-                                <div className="media-body">
-                                    <div className="mar-btm">
-                                        <a href="https://google.com" className="btn-link text-semibold media-heading box-inline">John Doe</a>
-                                        <p className="text-muted text-sm"><i className="fa fa-mobile fa-lg"></i> - From Mobile - 11 min ago</p>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet.</p>
-                                    <img className="img-responsive thumbnail" src="https://via.placeholder.com/400x300" alt="..." />
-                                    <div className="pad-ver">
-                                        <span className="tag tag-sm"><i className="fa fa-heart text-danger"></i> 250 Likes</span>
-                                        <div className="btn-group">
-                                            <a className="btn btn-sm btn-default btn-hover-success" href="https://google.com"><i className="fa fa-thumbs-up"></i></a>
-                                            <a className="btn btn-sm btn-default btn-hover-danger" href="https://google.com"><i className="fa fa-thumbs-down"></i></a>
-                                        </div>
-                                        <a className="btn btn-sm btn-default btn-hover-primary" href="https://google.com">Comment</a>
-                                    </div>
-                                    <hr />
-
-
-                                    <div>
-
-                                    </div>
-                                </div>
-                            </div> */}
+                          
 
                         </div>
                     </div>

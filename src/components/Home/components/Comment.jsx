@@ -1,4 +1,5 @@
 import React from 'react';
+import './Comment.css';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 
 const Comment = ({ user, text, createdAt }) => {

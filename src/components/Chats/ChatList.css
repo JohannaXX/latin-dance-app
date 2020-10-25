@@ -25,6 +25,10 @@ a:not([href]):not([tabindex]):focus {
     outline: 0
 }
 
+a:link {
+    text-decoration: none
+}
+
 .text-muted {
     color: #99a0ac !important
 }
@@ -61,31 +65,6 @@ a:not([href]):not([tabindex]):focus {
     border-radius: inherit;
     width: 100%
 }
-
-.gd-primary {
-    color: #fff;
-    border: none;
-    background: #448bff linear-gradient(45deg, #448bff, #44e9ff)
-}
-
-.gd-success {
-    color: #fff;
-    border: none;
-    background: #31c971 linear-gradient(45deg, #31c971, #3dc931)
-}
-
-.gd-info {
-    color: #fff;
-    border: none;
-    background: #14bae4 linear-gradient(45deg, #14bae4, #14e4a6)
-}
-
-.gd-warning {
-    color: #fff;
-    border: none;
-    background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
-}
-
 
 .list {
     padding-left: 0;
@@ -149,6 +128,5 @@ a:not([href]):not([tabindex]):focus {
     height: 48px !important
 }
 
-a:link {
-    text-decoration: none
-}
+
+

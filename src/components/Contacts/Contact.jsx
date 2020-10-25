@@ -1,7 +1,7 @@
 import React from 'react';
 import './Contact.css';
 
-const Contact = ({ id, avatar, name, bio, style, btnAction }) => {
+const Contact = ({ id, avatar, name, city, country, bio, style, btnAction }) => {
 
 
     return (
@@ -14,7 +14,7 @@ const Contact = ({ id, avatar, name, bio, style, btnAction }) => {
                         </span>
                     </a>
                     <div className="mt-2">
-                        <p className="text-muted">Madrid  |  ES</p>
+                        <p className="text-muted">{ city }  |  { country }</p>
                     </div>
                 </div>
                 <div className="col-md-7 col-sm-7">

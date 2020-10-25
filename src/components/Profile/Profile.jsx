@@ -1,6 +1,5 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import { getUser } from '../../services/UserClient';
-import './Profile.css';
 import ProfilePost from './components/ProfilePost';
 import PhotoGallery from './components/PhotoGallery';
 
@@ -36,7 +35,7 @@ const Profile = (props) => {
     return (
         <div className="profile-container">
 
-            <div className="row py-5 px-4">
+            <div className="row py-2 px-4">
                 <div className="col-sm-8 mx-auto">
 
 
@@ -82,7 +81,8 @@ const Profile = (props) => {
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
 
-                            <PhotoGallery images = { user.gallery }/>
+                            { !user.gallery ? null : <PhotoGallery images = { user.gallery }/> }
+                            
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                     <h5 className="mb-0">Recent posts</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
