@@ -39,7 +39,6 @@ const Chat = (props) => {
                 "messages": result
             }
         })
-        console.log(result)
         return () => cleanup
     }, [search, data])
 

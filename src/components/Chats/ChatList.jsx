@@ -1,5 +1,7 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import { getChatList } from '../../services/ChatClient';
+import { getContacts } from '../../services/UserClient';
+import ChatListComponent from './ChatListComponent';
 import './ChatList.css';
 
 const ChatList = () => {
@@ -7,14 +9,23 @@ const ChatList = () => {
     const [ data, setData ] = useState([]);
     const [ search, setSearch ] = useState("");
     const [ contacts, setContacts ] = useState([]);
+    const [ usersContacts, setUsersContact ] = useState([]);
+    const [ showUserContacts, setShowUserContacts ] = useState(false)
     const [ error, setError ] = useState(null);
 
     useEffect( () => {
         getChatList()
             .then( res => {
-                setData(res.chats)
+                
                 setContacts(res.chats);
                 setShowContacts(true);
+            })
+            .catch(err => setError(err.response?.data?.message))
+
+        getContacts()
+            .then( res => {
+                setData(res)
+                setUsersContact(res)
             })
             .catch(err => setError(err.response?.data?.message))
 
@@ -24,15 +35,23 @@ const ChatList = () => {
     useEffect(() => {
         const result = data.filter( e => {
             const toSearch = new RegExp(search, "i")
-            return toSearch.test(e.members[0].name)
+            return toSearch.test(e.user.name)
         })
-        setContacts(result)
+        setUsersContact(result)
         return () => cleanup
     }, [search, data])
 
     const handleSearch = (e) => {
         e.preventDefault();
         setSearch(e.target.value)
+    }
+
+    const clickedOutsideOfSearch = () => {
+        setShowUserContacts(false)
+    }
+
+    const clickedInsideOfSearch = () => {
+        setShowUserContacts(true)
     }
 
     if (!showContacts) {
@@ -54,7 +73,7 @@ const ChatList = () => {
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search"></input>
+                                <input onChange={handleSearch} value={search} onBlur={clickedOutsideOfSearch} onClick={clickedInsideOfSearch} type="text" className="search-bar"  placeholder="Search"></input>
                                 <span className="input-group-addon">
                                     <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                 </span> 
@@ -63,37 +82,25 @@ const ChatList = () => {
                     </div>
 
                     <div className="list list-row block">
-                        { contacts.map( c => {
-                            const contact = c.members[0];
-                            const msg = c.messages[0];
-
-                            return (
-                                <div className="list-item" key={ contact.id }>
-                                    <div>
-                                        <a href={"/user/" + contact.id}>
-                                            <span className="w-48 avatar gd-info">
-                                                <img src={contact.avatar} alt="."/>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div className="flex w-100"> 
-                                        <a href={"/chat/" + c.id} className="item-author text-color">
-                                            {contact.name}
-                                        </a>
-                                        
-                                        { !msg ? null : (
-                                            <div className="row item-except text-muted text-sm">
-                                                <div className="col-8 item-except text-muted text-sm ">
-                                                    {msg.message.length <= 20 ? msg.message : `${msg.message.substring(0,30)}...`}
-                                                </div>
-                                                <div className="col-4 text-right flex item-except text-muted text-sm text-nowrap">{msg.createdAt.split("T")[0]}</div>
-                                            </div>
-                                        ) }
-                                        
-                                    </div>
-                                </div> 
-                            )
-                        })}
+                        { showUserContacts ? 
+                            (usersContacts.map( c => {
+                                return (
+                                    <ChatListComponent key = { c.user.id }
+                                        contact = { c.user } 
+                                    />
+                                )
+                            }))
+                            :
+                            contacts.map( c => {
+                                return (
+                                    <ChatListComponent key = { c.id }
+                                        contact = { c.members[0] } 
+                                        msg = { c.messages[0] } 
+                                        chatId = { c.id }
+                                    />
+                            )})
+                            
+                        }
                         
                     </div>
                 </div>
