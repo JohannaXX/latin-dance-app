@@ -13,7 +13,6 @@ const Profile = (props) => {
         const getThisUser = async () => {
             try {
                 const profile = await getUser(props.match.params.id)
-                console.log(profile)
                 setUser(profile);
             } catch(err) {
                 setError(err.response?.data?.message);
@@ -22,7 +21,7 @@ const Profile = (props) => {
         getThisUser();
 
         return () =>  cleanup 
-    }, [])
+    }, [props.match.params.id])
 
     if (!user.name) {
         return <div className="text-center">Loading...</div>
@@ -81,7 +80,7 @@ const Profile = (props) => {
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
 
-                            { !user.gallery ? null : <PhotoGallery images = { user.gallery }/> }
+                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
@@ -90,7 +89,7 @@ const Profile = (props) => {
                                 
                                 { user.posts.map( p => {
                                 return (
-                                    <ProfilePost 
+                                    <ProfilePost key = { p.id }
                                         id = { p.id }
                                         user = { p.user }
                                         body = { p.body }

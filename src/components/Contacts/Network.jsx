@@ -1,27 +1,57 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import './Network.css';
 import { getNetwork } from '../../services/UserClient';
+import { requestCreateMatch } from '../../services/UserClient';
 import Contact from './Contact';
 
 const Network = () => {
-    const [ network, setNetwork ] = useState([])
-    const [ error, setError ] = useState(null)
+    const [ showContacts, setShowContacts] = useState(false)
+    const [ data, setData ] = useState([]);
+    const [ search, setSearch ] = useState("");
+    const [ network, setNetwork ] = useState([]);
+    const [ match, setMatch ] = useState({});
+    const [ error, setError ] = useState(null);
+
 
     useEffect(() => {
-        const getEntireNetwork = async () => {
-            try {
-                const allNetwork = await getNetwork()
-                setNetwork(allNetwork);
-            } catch(err) {
-                setError(err.response?.data?.message);
-            }
-        }
-        getEntireNetwork();
+        getNetwork()
+            .then( res => {
+                setData(res.users) 
+                setNetwork(res.users)
+                setShowContacts(true)
+            })
+            .catch(err => setError(err.response?.data?.message) )
 
         return () =>  cleanup 
-    }, [])
+    }, [match])
 
-    if (network.length === 0) {
+    useEffect(() => {
+        const result = data.filter( e => {
+            const toSearch = new RegExp(search, "i")
+            return toSearch.test(e.name)
+        })
+        setNetwork(result)
+        return () => cleanup
+    }, [search, data])
+
+
+    const requestMatch = ( e, id ) => {
+        e.preventDefault();
+
+        requestCreateMatch(id)
+            .then( res =>  setMatch(res) )
+            .catch(err => setError(err.response?.data?.message))
+        
+        return () =>  cleanup
+    }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value)
+    }
+
+
+    if (!showContacts) {
         return <div className="text-center">Loading...</div>
     } 
 
@@ -40,7 +70,7 @@ const Network = () => {
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input type="text" className="search-bar"  placeholder="Search..."></input>
+                                <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search..."></input>
                                 <span className="input-group-addon">
                                     <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                 </span> 
@@ -52,15 +82,16 @@ const Network = () => {
 
                         { network.map( c => {
                             return (
-                                <Contact 
+                                <Contact key={ c.id }
                                     id = { c.id }
-                                    avatar = { c.user.avatar }
-                                    name = { c.user.name }
-                                    city = { c.user.city }
-                                    country = { c.user.country }
-                                    bio = { c.user.bio }
-                                    style = { c.user.style }
-                                    btnAction = 'Add'
+                                    avatar = { c.avatar }
+                                    name = { c.name }
+                                    city = { c.city }
+                                    country = { c.country }
+                                    bio = { c.bio }
+                                    style = { c.style }
+                                    btnText = 'Add'
+                                    btnAction = { (e) => requestMatch(e, c.id) }
                                 />
                             )
                         })}

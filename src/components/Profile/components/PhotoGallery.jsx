@@ -4,10 +4,10 @@ const PhotoGallery = ({ images }) => {
 
     return (
         <div className="row">
-            { images.map( i => {
+            { images.map( (img, ind) => {
                 return (
-                    <div className="col-lg-6 mb-2 pr-lg-1">
-                        <img className="img-fluid rounded shadow-sm w-photo" src={ i } alt=".."/>
+                    <div className="col-lg-6 mb-2 pr-lg-1" key={ ind }>
+                        <img className="img-fluid rounded shadow-sm w-photo" src={ img } alt=".."/>
                     </div>
                 )
             })

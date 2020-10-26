@@ -20,6 +20,10 @@ export const login = ({ email, password }) => http.post('/login', { email, pass
 
 export const getUser = (id) => http.get(`/user/${id}`);
 
-export const getContacts = () => http.get('/contacts')
+export const getContacts = () => http.get('/contacts');
 
-export const getNetwork = () => http.get('/network')
+export const getNetwork = () => http.get('/network');
+
+export const updateMatch = (id, status) => http.patch(`/match/${id}/update`, { status })
+
+export const requestCreateMatch = (id) => http.post('/match', { id })

@@ -1,8 +1,7 @@
 import React from 'react';
 import './Contact.css';
 
-const Contact = ({ id, avatar, name, city, country, bio, style, btnAction }) => {
-
+const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnAction, denyRequest }) => {
 
     return (
         <div className="user-card align-center">
@@ -26,7 +25,14 @@ const Contact = ({ id, avatar, name, city, country, bio, style, btnAction }) => 
                 </div>
                 { !btnAction ? null : (
                     <div className="col-md-2 col-sm-2 text-center">
-                        <button className="btn btn-primary m-auto"> { btnAction }</button>
+                        <form onSubmit={ btnAction }>
+                            <button type="submit" className="btn btn-primary m-auto">{ btnText }</button>
+                        </form>
+                        { btnText === 'Accept' ? (
+                            <form onSubmit={ denyRequest }>
+                                <button type="submit" className="btn btn-primary mx-auto mt-3 ">Deny</button>
+                            </form>
+                        ) : null}
                     </div>
                 )}
             </div>

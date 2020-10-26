@@ -1,29 +1,41 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import { getChatList } from '../../services/ChatClient';
-import { timeUntilNow } from '../../helpers/dates.helper';
 import './ChatList.css';
 
 const ChatList = () => {
-    const [contacts, setContacts] = useState([]);
-    const [error, setError] = useState(null);
+    const [ showContacts, setShowContacts] = useState(false)
+    const [ data, setData ] = useState([]);
+    const [ search, setSearch ] = useState("");
+    const [ contacts, setContacts ] = useState([]);
+    const [ error, setError ] = useState(null);
 
     useEffect( () => {
-        const getAllChats = async () => {
-            try {
-                const chatList = await getChatList();
-                /* console.log(chatList) */
-                setContacts(chatList.chats);
-            } catch(err) {
-                setError(err.response?.data?.message);
-            }
-        }
-        getAllChats()
+        getChatList()
+            .then( res => {
+                setData(res.chats)
+                setContacts(res.chats);
+                setShowContacts(true);
+            })
+            .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
     }, [])
 
+    useEffect(() => {
+        const result = data.filter( e => {
+            const toSearch = new RegExp(search, "i")
+            return toSearch.test(e.members[0].name)
+        })
+        setContacts(result)
+        return () => cleanup
+    }, [search, data])
 
-    if (contacts.length === 0) {
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value)
+    }
+
+    if (!showContacts) {
         return <div className="text-center">Loading...</div>
     } 
 
@@ -42,7 +54,7 @@ const ChatList = () => {
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input type="text" className="search-bar"  placeholder="Search"></input>
+                                <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search"></input>
                                 <span className="input-group-addon">
                                     <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                 </span> 
@@ -56,7 +68,7 @@ const ChatList = () => {
                             const msg = c.messages[0];
 
                             return (
-                                <div className="list-item">
+                                <div className="list-item" key={ contact.id }>
                                     <div>
                                         <a href={"/chat/" + c.id}>
                                             <span className="w-48 avatar gd-info">

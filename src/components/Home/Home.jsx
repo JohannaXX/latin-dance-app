@@ -4,25 +4,39 @@ import { getPosts } from '../../services/PostClient';
 import './Home.css';
 
 const Home = () => {
+    const [ showPosts, setShowPosts] = useState(false)
+    const [ data, setData ] = useState([]);
+    const [ search, setSearch ] = useState("");
     const [ posts, setPosts ] = useState([])
     const [ error, setError ] = useState(null)
 
     useEffect(() => {
-        const getAllPosts = async () => {
-            try {
-                const postList = await getPosts()
-                /* console.log(postList[0]) */
-                setPosts(postList);
-            } catch(err) {
-                setError(err.response?.data?.message);
-            }
-        }
-        getAllPosts();
+        getPosts()
+            .then( res => {
+                setData(res);
+                setPosts(res);
+                setShowPosts(true);
+            })
+            .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
     }, [])
 
-    if (posts.length === 0) {
+    useEffect(() => {
+        const result = data.filter( e => {
+            const toSearch = new RegExp(search, "i")
+            return toSearch.test(e.body)
+        })
+        setPosts(result);
+        return () => cleanup
+    }, [search, data])
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value)
+    }
+
+    if (!showPosts) {
         return <div className="text-center">Loading...</div>
     } 
 
@@ -55,7 +69,7 @@ const Home = () => {
                             </div>
                             <div className="srch_bar">
                                 <div className="stylish-input-group">
-                                    <input type="text" className="search-bar"  placeholder="Search..."></input>
+                                    <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search..."></input>
                                     <span className="input-group-addon">
                                     <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
                                     </span> 
@@ -70,7 +84,7 @@ const Home = () => {
                         <div className="panel-body">
                             { posts.map(p => {
                                 return (
-                                    <Post 
+                                    <Post key = { p.id }
                                         user = { p.user }
                                         body = { p.body }
                                         image = { p.image }

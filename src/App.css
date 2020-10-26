@@ -25,9 +25,9 @@
 }
 
 .w-photo-home {
+  min-width: 200px;
   max-width: 400px;
-  min-height: 300px;
-  max-height: 500px;
+  height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
 }

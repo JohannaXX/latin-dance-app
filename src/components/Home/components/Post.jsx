@@ -19,9 +19,11 @@ const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
                 </div>
 
                 <div>{ body }</div>
-
+                
                 { !image ? null : (
-                   <div className="py-2 m-auto w-photo-home" style={{background: `url(${ image })`}}></div>
+                   <div className="py-2 m-auto w-photo-home">
+                       <img className="w-photo-home" src={ image } alt=".."/>
+                   </div>
                 ) }
 
                 <div className="mt-1">
@@ -37,7 +39,7 @@ const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
 
                 { comments.map( c => {
                     return (
-                        <Comment 
+                        <Comment key = { c.id }
                             user = { c.user }
                             text = { c.text }
                             createdAt = { c.createdAt }
