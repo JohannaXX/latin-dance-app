@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import Comment from './Comment';
 import './Post.css';
 
 const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
+    const [ showComments, setShowComments ] = useState(false);
     
+    const toggleShowComments = () => {
+        setShowComments(!showComments);
+    }
+
     return (
         <div className="media-block">
 
@@ -30,22 +35,24 @@ const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
                     <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0">
                         <i className="fa fa-heart-o"></i> &nbsp;{ likes.length } Likes &nbsp;| 
                     </a>
-                    <a className="btn btn-sm btn-default btn-hover-primary ml-2" href="https://google.com">
+                    <button onClick={toggleShowComments} className="btn btn-sm btn-default btn-hover-primary ml-2" >
                         <i className="fa fa-comment-o mr-1"></i>{ comments.length} Comments
-                    </a>
+                    </button>
                 </div>
                 
                 <hr />
-
-                { comments.map( c => {
-                    return (
-                        <Comment key = { c.id }
-                            user = { c.user }
-                            text = { c.text }
-                            createdAt = { c.createdAt }
-                        />
-                    )
-                })}
+                
+                { !showComments ? null : (
+                    comments.map( c => {
+                        return (
+                            <Comment key = { c.id }
+                                user = { c.user }
+                                text = { c.text }
+                                createdAt = { c.createdAt }
+                            />
+                        )
+                    })
+                )}
                
             </div>
         </div>

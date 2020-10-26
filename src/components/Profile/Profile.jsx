@@ -9,16 +9,9 @@ const Profile = (props) => {
     const me = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
-        
-        const getThisUser = async () => {
-            try {
-                const profile = await getUser(props.match.params.id)
-                setUser(profile);
-            } catch(err) {
-                setError(err.response?.data?.message);
-            }
-        }
-        getThisUser();
+        getUser(props.match.params.id)
+            .then( res => setUser(res))
+            .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
     }, [props.match.params.id])
@@ -51,7 +44,7 @@ const Profile = (props) => {
                                         <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
                                     </div>
                                     { user.id !== me.id ? null : (
-                                        <a href="https://google.com" className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
+                                        <a href={"/user/" + me.id } className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
                                     )}
                                 </div>
                             </div>
@@ -80,7 +73,7 @@ const Profile = (props) => {
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
 
-                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
+                         {/*    { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> } */}
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">

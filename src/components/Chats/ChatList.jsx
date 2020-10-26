@@ -70,7 +70,7 @@ const ChatList = () => {
                             return (
                                 <div className="list-item" key={ contact.id }>
                                     <div>
-                                        <a href={"/chat/" + c.id}>
+                                        <a href={"/user/" + contact.id}>
                                             <span className="w-48 avatar gd-info">
                                                 <img src={contact.avatar} alt="."/>
                                             </span>
