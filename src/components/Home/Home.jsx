@@ -1,14 +1,18 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import Post from './components/Post';
 import { getPosts } from '../../services/PostClient';
+import { createPosts } from '../../services/PostClient';
 import './Home.css';
 
 const Home = () => {
-    const [ showPosts, setShowPosts] = useState(false)
+    const [ showPosts, setShowPosts] = useState(false);
     const [ data, setData ] = useState([]);
     const [ search, setSearch ] = useState("");
-    const [ posts, setPosts ] = useState([])
-    const [ error, setError ] = useState(null)
+    const [ posts, setPosts ] = useState([]);
+    const [ error, setError ] = useState(null);
+    const [ postToPublish, setPostToPublish ] = useState("");
+    const [ imageToPublish, setImageToPublish ] = useState(null);
+    const [ reload, setReload ] = useState(false)
 
     useEffect(() => {
         getPosts()
@@ -20,7 +24,7 @@ const Home = () => {
             .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
-    }, [])
+    }, [reload])
 
     useEffect(() => {
         const result = data.filter( e => {
@@ -34,6 +38,32 @@ const Home = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         setSearch(e.target.value)
+    }
+
+    const handleWritePost = (e) => {
+        e.preventDefault();
+        setPostToPublish(e.target.value);
+    }
+
+    const handleAddImage = (e) => {
+        e.preventDefault();
+        setImageToPublish(e.target.files[0]);
+    }
+
+    const handlePublishPost = (e) => {
+        e.preventDefault();
+
+        if (!postToPublish) {
+            setError('Text is missing')
+        }
+ 
+        createPosts(postToPublish, imageToPublish)
+            .then( () => {
+                setPostToPublish("")
+                setImageToPublish(null)
+                setReload(true)
+            })
+            .catch(err => setError(err.response?.data?.message))
     }
 
     if (!showPosts) {
@@ -51,14 +81,15 @@ const Home = () => {
                 <div className="col-sm-8 shadow mx-auto bootstrap snippets post-feed mt-2">
                     <div className="panel m-0">
                         <div className="panel-body p-3">
-                            <textarea className="form-control" rows="2" placeholder="What are you thinking?"></textarea>
+                           {/*  { error? <div>{error}</div> : null } */}
+                            <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
                             <div className=" clearfix">
-                                <button className="btn btn-sm btn-primary pull-right" type="submit">
+                                <input name="image" type="file" onChange={ handleAddImage }/* className="btn-icon fa fa-upload"  */></input>
+                                <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishPost } type="button">
                                     <i className="fa fa-pencil fa-fw"></i> Share
                                 </button>
-                                <a className="btn btn-trans btn-icon fa fa-video-camera add-tooltip" href="https://google.com"> </a>
-                                <a className="btn btn-trans btn-icon fa fa-camera add-tooltip" href="https://google.com"> </a>
                             </div>
+                     
                         </div>
                     </div>
 

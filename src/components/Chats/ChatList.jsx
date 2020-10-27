@@ -9,14 +9,21 @@ const ChatList = () => {
     const [ data, setData ] = useState([]);
     const [ search, setSearch ] = useState("");
     const [ contacts, setContacts ] = useState([]);
-    const [ usersContacts, setUsersContact ] = useState([]);
+    const [ usersContacts, setUsersContacts ] = useState([]);
     const [ showUserContacts, setShowUserContacts ] = useState(false)
     const [ error, setError ] = useState(null);
+
+    const [ contactIdsWithActiveChat, setContactIdsWithActiveChat] = useState({});
 
     useEffect( () => {
         getChatList()
             .then( res => {
-                
+                const filterContactIdsAndChats = res.chats.reduce( (acc, cur) => {
+                    acc[cur.members[0].id] = cur.id
+                    return acc
+                }, {}) 
+                setContactIdsWithActiveChat(filterContactIdsAndChats)
+               /*  console.log(contactIdsWithActiveChat) */
                 setContacts(res.chats);
                 setShowContacts(true);
             })
@@ -25,7 +32,7 @@ const ChatList = () => {
         getContacts()
             .then( res => {
                 setData(res)
-                setUsersContact(res)
+                setUsersContacts(res)
             })
             .catch(err => setError(err.response?.data?.message))
 
@@ -37,7 +44,7 @@ const ChatList = () => {
             const toSearch = new RegExp(search, "i")
             return toSearch.test(e.user.name)
         })
-        setUsersContact(result)
+        setUsersContacts(result)
         return () => cleanup
     }, [search, data])
 
@@ -51,7 +58,7 @@ const ChatList = () => {
     }
 
     const clickedInsideOfSearch = () => {
-        setShowUserContacts(true)
+        setShowUserContacts(true)   
     }
 
     if (!showContacts) {
@@ -73,9 +80,15 @@ const ChatList = () => {
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={handleSearch} value={search} onBlur={clickedOutsideOfSearch} onClick={clickedInsideOfSearch} type="text" className="search-bar"  placeholder="Search"></input>
+                                <input onChange={handleSearch} value={search} onClick={clickedInsideOfSearch} type="text" className="search-bar"  placeholder="Search"></input>
                                 <span className="input-group-addon">
-                                    <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                    { showUserContacts ? 
+                                        <button type="button" onClick={clickedOutsideOfSearch}>
+                                            <i className="fa fa-close" aria-hidden="true"></i> 
+                                        </button>
+                                        : 
+                                        <i className="fa fa-search" aria-hidden="true"></i> 
+                                    }
                                 </span> 
                             </div>
                         </div>
@@ -84,11 +97,21 @@ const ChatList = () => {
                     <div className="list list-row block">
                         { showUserContacts ? 
                             (usersContacts.map( c => {
-                                return (
-                                    <ChatListComponent key = { c.user.id }
-                                        contact = { c.user } 
-                                    />
-                                )
+                                
+                                if (Object.keys(contactIdsWithActiveChat).includes(c.user.id)) {
+                                    return (
+                                        <ChatListComponent key = { c.user.id }
+                                            contact = { c.user }
+                                            chatId = { contactIdsWithActiveChat[c.user.id] } 
+                                        />
+                                    )
+                                } else {
+                                    return (
+                                        <ChatListComponent key = { c.user.id }
+                                            contact = { c.user } 
+                                        />
+                                    )
+                                }  
                             }))
                             :
                             contacts.map( c => {
@@ -99,7 +122,6 @@ const ChatList = () => {
                                         chatId = { c.id }
                                     />
                             )})
-                            
                         }
                         
                     </div>

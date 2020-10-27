@@ -29,6 +29,24 @@ a:link {
     text-decoration: none
 }
 
+button {
+    color: #448bff;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+}
+
+button:hover {
+    color: #005ef7;
+    text-decoration: none;
+    border: none;
+}
+
+button:active {
+    text-decoration: none
+}
+
+
 .text-muted {
     color: #99a0ac !important
 }

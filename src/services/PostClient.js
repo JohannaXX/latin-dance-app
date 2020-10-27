@@ -18,3 +18,5 @@ http.interceptors.response.use(function(response) {
 
 export const getPosts = () => http.get('/');
 
+export const createPosts = (body, image) => http.post('/post', { body, image });
+

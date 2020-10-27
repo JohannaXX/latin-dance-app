@@ -32,7 +32,7 @@ const Post = ({ user, body, image, likes, comments, createdAt, updatedAt}) => {
                 ) }
 
                 <div className="mt-1">
-                    <a href="http://google.com" className="btn btn-sm btn-default btn-hover-primary p-0">
+                    <a href="/" className="btn btn-sm btn-default btn-hover-primary p-0">
                         <i className="fa fa-heart-o"></i> &nbsp;{ likes.length } Likes &nbsp;| 
                     </a>
                     <button onClick={toggleShowComments} className="btn btn-sm btn-default btn-hover-primary ml-2" >

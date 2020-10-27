@@ -22,3 +22,5 @@ export const createMessage = (id, message) => http.post(`/chat/${id}/messages`, 
 export const getChat = (id) => http.get(`/chat/${id}`);
 
 export const getChatList = (limit) => http.get('/chats', {params: {limit}});
+
+export const createChat = (members) => http.post('/chat', { members }) 

@@ -1,6 +1,22 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import Chat from './Chat';
+import { createChat } from '../../services/ChatClient';
 
-const ChatListComponent = ({contact, msg, chatId}) => {
+const ChatListComponent = ({ contact, msg, chatId}) => {
+    const handleForward = (e) => {
+        e.preventDefault();
+
+        const me = JSON.parse(localStorage.getItem('user'))
+
+        createChat([contact.id, me.id])
+            .then( chat =>  {
+            /*     window.location.href = `http://localhost:3001/chat/${chat.id}`; */
+                window.location.href = `${process.env.REACT_APP_API_URL}/chat/${chat.id}`;
+            })
+
+    }
+    
     return (
         <div className="list-item" key={ contact.id }>
             <div>
@@ -11,10 +27,16 @@ const ChatListComponent = ({contact, msg, chatId}) => {
                 </a>
             </div>
             <div className="flex w-100"> 
-                <a href={"/chat/" + chatId} className="item-author text-color">
-                    {contact.name}
-                </a>
-                
+                { chatId? 
+                    <a href={"/chat/" + chatId} className="item-author text-color">
+                        {contact.name}
+                    </a>
+                    : 
+                    <form onSubmit={handleForward}>
+                        <button onClick={handleForward} type="submit" className="item-author text-color">{contact.name} 2</button>
+                    </form>
+                }
+       
                 { !msg ? null : (
                     <div className="row item-except text-muted text-sm">
                         <div className="col-8 item-except text-muted text-sm ">

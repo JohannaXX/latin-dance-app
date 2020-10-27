@@ -73,7 +73,7 @@ const Profile = (props) => {
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
 
-                         {/*    { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> } */}
+                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
