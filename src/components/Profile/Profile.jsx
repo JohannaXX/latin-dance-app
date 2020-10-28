@@ -89,7 +89,7 @@ const Profile = (props) => {
                                         image = { p.image }
                                         createdAt = { p.createdAt }
                                         comments = { p.comments }
-                                        likes = { p.likes }
+                                        likes = { p.likes.length }
                                     />
                                 )
                                 })}

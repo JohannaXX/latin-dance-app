@@ -1,6 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import Chat from './Chat';
 import { createChat } from '../../services/ChatClient';
 
 const ChatListComponent = ({ contact, msg, chatId}) => {
@@ -11,7 +9,6 @@ const ChatListComponent = ({ contact, msg, chatId}) => {
 
         createChat([contact.id, me.id])
             .then( chat =>  {
-            /*     window.location.href = `http://localhost:3001/chat/${chat.id}`; */
                 window.location.href = `${process.env.REACT_APP_API_URL}/chat/${chat.id}`;
             })
 

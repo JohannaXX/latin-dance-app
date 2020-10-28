@@ -16,9 +16,9 @@ const Home = () => {
 
     useEffect(() => {
         getPosts()
-            .then( res => {
-                setData(res);
-                setPosts(res);
+            .then( posts => {
+                setData(posts);
+                setPosts(posts);
                 setShowPosts(true);
             })
             .catch(err => setError(err.response?.data?.message))
@@ -116,10 +116,11 @@ const Home = () => {
                             { posts.map(p => {
                                 return (
                                     <Post key = { p.id }
+                                        id = { p.id }
                                         user = { p.user }
                                         body = { p.body }
                                         image = { p.image }
-                                        likes = { p.likes }
+                                        likes = { p.likes.length }
                                         comments = { p.comments }
                                         createdAt = { p.createdAt }
                                         updatedAt = { p.updatedAt }
