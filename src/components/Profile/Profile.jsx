@@ -4,9 +4,10 @@ import ProfilePost from './components/ProfilePost';
 import PhotoGallery from './components/PhotoGallery';
 
 const Profile = (props) => {
-    const [ user, setUser ] = useState({})
-    const [ error, setError ] = useState(null)
-    const me = JSON.parse(localStorage.getItem('user'))
+    const [ user, setUser ] = useState({});
+    const [ showEditProfile, setShowEditProfile ] = useState(false)
+    const [ error, setError ] = useState(null);
+    const myId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
         getUser(props.match.params.id)
@@ -16,6 +17,23 @@ const Profile = (props) => {
         return () =>  cleanup 
     }, [props.match.params.id])
 
+   /*  const clickedEditProfile = () => {
+        setShowEditProfile(true)
+    }
+
+    const handleEditProfile = (e) => {
+        setEditPost(e.target.value)
+    }
+
+    const submitProfileUpdate = () => {
+        updatePost(id, {body: editPost})
+            .then( post => {
+                setText(post.body)
+                setShowEditPost(false)
+            })
+            .catch(err => setError(err.response?.data?.message))
+    } */
+ 
     if (!user.name) {
         return <div className="text-center">Loading...</div>
     } 
@@ -40,11 +58,12 @@ const Profile = (props) => {
                                 </span>
                                 <div className="media-body mb-2 text-white profile-card-header ">
                                     <div>
+
                                         <h4 className="mt-1 mr-3 d-inline">{ user.name }</h4>
                                         <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
                                     </div>
-                                    { user.id !== me.id ? null : (
-                                        <a href={"/user/" + me.id } className="btn btn-dark btn-sm btn-block text-right">Edit profile</a>
+                                    { user.id !== myId ? null : (
+                                        <button className="text-white" type="button" /* onClick={ clickedEditProfile } */><u>Edit profile</u></button>
                                     )}
                                 </div>
                             </div>

@@ -63,6 +63,10 @@ const Chat = (props) => {
             .catch(err => setError(err.response?.data?.message))
     }
 
+    const handleReload = () => {
+        setReload(!reload)
+    }
+
     if (!showMessages) {
         return <div className="text-center">Loading...</div>
     }
@@ -117,6 +121,7 @@ const Chat = (props) => {
                                         if (m.sender === contact.id) {
                                             return (
                                                 <Message key={ m._id }
+                                                    id = { m._id }
                                                     type = 'incoming'
                                                     avatar = {contact.avatar}
                                                     text = {m.message}
@@ -125,9 +130,11 @@ const Chat = (props) => {
                                         } else {
                                             return ( 
                                                 <Message key={ m._id }
+                                                    id = { m._id }
                                                     type = 'outgoing'
                                                     text = {m.message}
                                                     date = {m.createdAt}
+                                                    reload = { handleReload }
                                                 />)
                                         }
                                     })}
