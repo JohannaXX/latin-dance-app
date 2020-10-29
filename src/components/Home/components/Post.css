@@ -5,3 +5,10 @@
 .text-sm {
     font-size: 0.9em;
 }
+
+.posted-image {
+    display: block;
+    max-width: 350px;
+    max-height: 350px;
+    margin: auto
+}

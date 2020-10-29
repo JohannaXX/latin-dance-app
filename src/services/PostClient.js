@@ -25,6 +25,7 @@ export const createPosts = ( body ) => http.post('/post', body , {
 });
 
 export const updatePost = ( id, body ) => http.patch(`/post/${id}/update`, body);
+export const deletePost = ( id ) => http.delete(`/post/${id}`);
 
 export const createComment = ( id, text ) => http.post(`/post/${id}/comments`, { body: text });
 

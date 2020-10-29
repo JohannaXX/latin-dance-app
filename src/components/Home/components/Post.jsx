@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import { updatePost } from '../../../services/PostClient';
+import { deletePost } from '../../../services/PostClient';
 import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import Comment from './Comment';
 import './Post.css';
 
-const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) => {
+const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , requestReload}) => {
     const [ text, setText ] = useState( body );
     const [ allComments, setAllComments ] = useState(comments)
     const [ showComments, setShowComments ] = useState(false);
@@ -51,13 +52,19 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) 
     }
 
     const handlePublishComment = () => {
-        console.log(commentToPublish);
         createComment(id, commentToPublish)
             .then( c => {
                 setAllComments( prev => {
                     return [...prev, c]
                 })
             })
+    }
+
+    const handelCancelPost = () => {
+        deletePost(id)
+            .then( () => requestReload())
+            .catch(err => setError(err.response?.data?.message))
+
     }
 
     const handleReload = () => {
@@ -92,8 +99,8 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) 
 
 
                 { !image ? null : 
-                    <div className="py-2 m-auto w-photo-home">
-                        <img className="w-photo-home" src={image} alt=".." />
+                    <div className="py-2 m-auto">
+                        <img className="posted-image m-auto" src={image} alt=".." />
                     </div>
                 }
 
@@ -107,7 +114,10 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) 
                     </button>
 
                     {user.id !== myId ? null : (
-                        <button type="button" onClick={ clickedEditPost }>Edit post</button>
+                        <div>
+                            <button className="mx-2" onClick={ handelCancelPost }>Cancel post</button>
+                            <button className="mx-2" onClick={ clickedEditPost }>Edit post</button>
+                        </div>
                     )}
                 </div>
 

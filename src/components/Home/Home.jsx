@@ -9,10 +9,10 @@ const Home = () => {
     const [ data, setData ] = useState([]);
     const [ search, setSearch ] = useState("");
     const [ posts, setPosts ] = useState([]);
-    const [ error, setError ] = useState(null);
     const [ postToPublish, setPostToPublish ] = useState("");
     const [ imageToPublish, setImageToPublish ] = useState(null);
     const [ reload, setReload ] = useState(false);
+    const [ error, setError ] = useState(null);
 
     useEffect(() => {
         getPosts()
@@ -47,15 +47,12 @@ const Home = () => {
 
     const handleAddImage = (e) => {
         e.preventDefault();
-        console.log(e.target.files[0])
-        //setImageToPublish(e.target.files[0]);
     }
 
     const handlePublishPost = (e) => {
         e.preventDefault();
         const formData = new FormData()
         const image = document.querySelector("#file");
-        console.log('IMAGE', image);
         formData.append('image', image.files[0])
         formData.append('body', postToPublish)
 
@@ -70,6 +67,10 @@ const Home = () => {
                 setReload(true)
             })
             .catch(err => setError(err.response?.data?.message))
+    }
+
+    const handleReload = () => {
+        setReload(!reload)
     }
 
     if (!showPosts) {
@@ -130,6 +131,7 @@ const Home = () => {
                                         comments = { p.comments }
                                         createdAt = { p.createdAt }
                                         updatedAt = { p.updatedAt }
+                                        requestReload = { handleReload }
                                     />    
                                 ) 
                             })}
