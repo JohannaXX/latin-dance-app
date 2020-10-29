@@ -12,7 +12,7 @@ const Home = () => {
     const [ error, setError ] = useState(null);
     const [ postToPublish, setPostToPublish ] = useState("");
     const [ imageToPublish, setImageToPublish ] = useState(null);
-    const [ reload, setReload ] = useState(false)
+    const [ reload, setReload ] = useState(false);
 
     useEffect(() => {
         getPosts()
@@ -47,17 +47,23 @@ const Home = () => {
 
     const handleAddImage = (e) => {
         e.preventDefault();
-        setImageToPublish(e.target.files[0]);
+        console.log(e.target.files[0])
+        //setImageToPublish(e.target.files[0]);
     }
 
     const handlePublishPost = (e) => {
         e.preventDefault();
+        const formData = new FormData()
+        const image = document.querySelector("#file");
+        console.log('IMAGE', image);
+        formData.append('image', image.files[0])
+        formData.append('body', postToPublish)
 
         if (!postToPublish) {
             setError('Text is missing')
         }
  
-        createPosts(postToPublish, imageToPublish)
+        createPosts( formData)
             .then( () => {
                 setPostToPublish("")
                 setImageToPublish(null)
@@ -81,12 +87,12 @@ const Home = () => {
                 <div className="col-sm-8 shadow mx-auto bootstrap snippets post-feed mt-2">
                     <div className="panel m-0">
                         <div className="panel-body p-3">
-                           {/*  { error? <div>{error}</div> : null } */}
+
                             <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
                             <div className=" clearfix">
-                                <input name="image" type="file" onChange={ handleAddImage }/* className="btn-icon fa fa-upload"  */></input>
+                                <input name="file" id="file" type="file" onChange={ handleAddImage }></input>
                                 <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishPost } type="button">
-                                    <i className="fa fa-pencil fa-fw"></i> Share
+                                    <i className="fa fa-pencil fa-fw" /* className="btn-icon fa fa-upload"  */></i> Share
                                 </button>
                             </div>
                      

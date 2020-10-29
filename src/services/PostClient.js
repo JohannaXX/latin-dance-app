@@ -18,7 +18,13 @@ http.interceptors.response.use(function(response) {
 
 export const getPosts = () => http.get('/');
 
-export const createPosts = ( body, image ) => http.post('/post', { body, image });
+export const createPosts = ( body ) => http.post('/post', body , {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+});
+
+export const updatePost = ( id, body ) => http.patch(`/post/${id}/update`, body);
 
 export const handleLikes = ( id ) => http.get(`/post/${id}/like`);
 

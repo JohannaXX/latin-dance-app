@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState} from 'react';
+import { Redirect } from 'react-router-dom';
 import { createChat } from '../../services/ChatClient';
 
 const ChatListComponent = ({ contact, msg, chatId}) => {
+    const [ chat, setChat ] = useState(null);
+
     const handleForward = (e) => {
         e.preventDefault();
 
@@ -9,11 +12,14 @@ const ChatListComponent = ({ contact, msg, chatId}) => {
 
         createChat([contact.id, me.id])
             .then( chat =>  {
-                window.location.href = `${process.env.REACT_APP_API_URL}/chat/${chat.id}`;
+                setChat(chat.id);
             })
-
     }
     
+    if (chat) {
+        return <Redirect to={`/chat/${chat}`} />
+    }
+
     return (
         <div className="list-item" key={ contact.id }>
             <div>
@@ -30,7 +36,7 @@ const ChatListComponent = ({ contact, msg, chatId}) => {
                     </a>
                     : 
                     <form onSubmit={handleForward}>
-                        <button onClick={handleForward} type="submit" className="item-author text-color">{contact.name} 2</button>
+                        <button onClick={handleForward} type="submit" className="item-author text-color">{contact.name}</button>
                     </form>
                 }
        
