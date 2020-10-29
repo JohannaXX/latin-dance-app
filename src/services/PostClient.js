@@ -26,5 +26,11 @@ export const createPosts = ( body ) => http.post('/post', body , {
 
 export const updatePost = ( id, body ) => http.patch(`/post/${id}/update`, body);
 
+export const createComment = ( id, text ) => http.post(`/post/${id}/comments`, { body: text });
+
+export const updateComment = ( id, text ) => http.patch(`/post/comment/${id}/update`, { body: text });
+
+export const deleteComment = ( id ) => http.delete(`/post/comment/${id}/delete`);
+
 export const handleLikes = ( id ) => http.get(`/post/${id}/like`);
 

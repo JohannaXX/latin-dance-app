@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import { updatePost } from '../../../services/PostClient';
+import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import Comment from './Comment';
 import './Post.css';
 
 const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) => {
-    const [ text, setText ] = useState( body )
+    const [ text, setText ] = useState( body );
+    const [ allComments, setAllComments ] = useState(comments)
     const [ showComments, setShowComments ] = useState(false);
     const [ allLikes, setAllLikes ] = useState(likes);
     const [ showEditPost, setShowEditPost ] = useState(false);
     const [ editPost, setEditPost ] = useState(body);
+    const [ commentToPublish, setCommentToPublish] = useState('');
+    const [ reload, setReload ] = useState(false);
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
@@ -40,6 +44,24 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) 
                 setShowEditPost(false)
             })
             .catch(err => setError(err.response?.data?.message))
+    }
+
+    const handleWriteComment = (e) => {
+        setCommentToPublish(e.target.value)
+    }
+
+    const handlePublishComment = () => {
+        console.log(commentToPublish);
+        createComment(id, commentToPublish)
+            .then( c => {
+                setAllComments( prev => {
+                    return [...prev, c]
+                })
+            })
+    }
+
+    const handleReload = () => {
+        setReload(!reload)
     }
 
     if ( error ) {
@@ -92,15 +114,26 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt }) 
                 <hr />
 
                 { !showComments ? null : (
-                    comments.map(c => {
-                        return (
-                            <Comment key={c.id}
-                                user={c.user}
-                                text={c.text}
-                                createdAt={c.createdAt}
-                            />
-                        )
-                    })
+                    <div>
+                        <textarea className="form-control" onChange={ handleWriteComment } value={ commentToPublish } rows="4" placeholder="Comment post"></textarea>
+                        <div className=" clearfix">
+                            <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishComment } type="button">
+                                <i className="fa fa-pencil fa-fw"></i> Post comment
+                            </button>
+                        </div>
+
+                        {allComments.map(c => {
+                            return (
+                                <Comment key={c.id}
+                                    id = {c.id}
+                                    user={c.user}
+                                    text={c.text}
+                                    createdAt={c.createdAt}
+                                    reload = {handleReload}
+                                />
+                            )
+                        })}
+                    </div>
                 )}
 
             </div>

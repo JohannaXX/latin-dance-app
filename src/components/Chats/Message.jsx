@@ -65,7 +65,7 @@ const Message = ({id, type, avatar, text, date, reload}) => {
                             </div>
                         </div> 
                         :
-                        <p className={text === '...(message cancelled)'? 'bg-light text-secondary': null}>{ text }</p>
+                        <p className={text === '...(message cancelled)'? 'bg-light text-mute': null}>{ text }</p>
                     }
                     
                     { !showEditCancelBtns ? null : 
