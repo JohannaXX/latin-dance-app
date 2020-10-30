@@ -1,6 +1,7 @@
 import React, { useState, useEffect, cleanup } from 'react';
 import ProfileToEdit from './ProfileToEdit';
 import { getUser } from '../../services/UserClient';
+import { createPosts } from '../../services/PostClient';
 import ProfilePost from './components/ProfilePost';
 import PhotoGallery from './components/PhotoGallery';
 
@@ -9,6 +10,9 @@ const Profile = (props) => {
     const [ showEditProfile, setShowEditProfile ] = useState(false);
     const [ error, setError ] = useState(null);
     const [ profileUpdated, setProfileUpdate ] = useState(false);
+    const [ postToPublish, setPostToPublish ] = useState("");
+    const [ imageToPublish, setImageToPublish ] = useState(null);
+    const [ reload, setReload ] = useState(false);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
@@ -17,7 +21,7 @@ const Profile = (props) => {
             .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
-    }, [props.match.params.id, profileUpdated])
+    }, [props.match.params.id, profileUpdated, reload])
 
     const clickedEditProfile = () => {
         setShowEditProfile(true)
@@ -39,6 +43,30 @@ const Profile = (props) => {
 
     const clickedCancelEditProfile = () => {
         setShowEditProfile(false)
+    }
+
+    const handleWritePost = (e) => {
+        e.preventDefault();
+        setPostToPublish(e.target.value);
+    }
+
+    const handlePublishPost = (e) => {
+        e.preventDefault();
+        const formData = new FormData()
+        const image = document.querySelector("#file");
+        formData.append('image', image.files[0])
+        formData.append('body', postToPublish)
+
+        if (!postToPublish) {
+            setError('Text is missing')
+        }
+ 
+        createPosts( formData)
+            .then( () => {
+                setPostToPublish("")
+                setReload(true)
+            })
+            .catch(err => setError(err.response?.data?.message))
     }
 
     if (!user.name) {
@@ -123,13 +151,29 @@ const Profile = (props) => {
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
 
-                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
+                           {/*  { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> } */}
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                     <h5 className="mb-0">Recent posts</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                                 </div>
-                                
+
+                                { user.id === myId ? 
+                                    <div className="py-2 px-4 mb-3 bg-light rounded shadow-sm">
+
+                                        <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
+                                        <div className=" clearfix">
+                                            <input name="file" id="file" type="file"></input>
+                                            <button className="btn btn-sm btn-secondary pull-right" onClick={ handlePublishPost } type="button">
+                                                Share
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                    :
+                                    null
+                                }
+
                                 { user.posts.map( p => {
                                     return (
                                         <ProfilePost key = { p.id }

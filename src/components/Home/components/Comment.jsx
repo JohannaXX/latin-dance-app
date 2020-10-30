@@ -10,7 +10,6 @@ const Comment = ({ id, user, text, createdAt }) => {
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
     
-    const myPost = (JSON.parse(localStorage.getItem('user')).id === user.id);
     
     const clickedEditComment = () => {
         setShowCommentToEdit(true);
@@ -35,7 +34,7 @@ const Comment = ({ id, user, text, createdAt }) => {
     }
 
     if ( error ) {
-        return <div>{ error }</div>
+        return error
     }
     
     return (
