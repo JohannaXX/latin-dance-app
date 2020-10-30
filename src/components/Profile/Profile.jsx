@@ -1,12 +1,14 @@
 import React, { useState, useEffect, cleanup } from 'react';
+import ProfileToEdit from './ProfileToEdit';
 import { getUser } from '../../services/UserClient';
 import ProfilePost from './components/ProfilePost';
 import PhotoGallery from './components/PhotoGallery';
 
 const Profile = (props) => {
     const [ user, setUser ] = useState({});
-    const [ showEditProfile, setShowEditProfile ] = useState(false)
+    const [ showEditProfile, setShowEditProfile ] = useState(false);
     const [ error, setError ] = useState(null);
+    const [ profileUpdated, setProfileUpdate ] = useState(false);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
@@ -15,25 +17,30 @@ const Profile = (props) => {
             .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
-    }, [props.match.params.id])
+    }, [props.match.params.id, profileUpdated])
 
-   /*  const clickedEditProfile = () => {
+    const clickedEditProfile = () => {
         setShowEditProfile(true)
     }
 
-    const handleEditProfile = (e) => {
-        setEditPost(e.target.value)
+    const handleUpdatedPerfil = (u) => {
+        setUser( prev => {
+            return {
+                ...prev,
+                avatar: u.avatar,
+                bio: u.bio,
+                city: u.city,
+                country: u.country,
+                name: u.name
+            }
+        })
+        setShowEditProfile(false)
     }
 
-    const submitProfileUpdate = () => {
-        updatePost(id, {body: editPost})
-            .then( post => {
-                setText(post.body)
-                setShowEditPost(false)
-            })
-            .catch(err => setError(err.response?.data?.message))
-    } */
- 
+    const clickedCancelEditProfile = () => {
+        setShowEditProfile(false)
+    }
+
     if (!user.name) {
         return <div className="text-center">Loading...</div>
     } 
@@ -47,47 +54,71 @@ const Profile = (props) => {
 
             <div className="row py-2 px-4">
                 <div className="col-sm-8 mx-auto">
-
-
                     <div className="bg-white shadow rounded overflow-hidden">
-                        <div className="p-3 bg-dark">
-                            <div className="media  profile-header">
-                                
-                                <span className="profile-image avatar w-120 mr-2">
-                                    <img className="" src={ user.avatar } alt="..."/>
-                                </span>
-                                <div className="media-body mb-2 text-white profile-card-header ">
-                                    <div>
 
-                                        <h4 className="mt-1 mr-3 d-inline">{ user.name }</h4>
-                                        <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
+                        {
+                            showEditProfile ? 
+
+                                <ProfileToEdit 
+                                    user ={ user } 
+                                    deactivateView = { clickedCancelEditProfile }
+                                    updatePerfil = { handleUpdatedPerfil }
+                                />
+
+                                :
+                                <div>
+                                    <div className="p-3 bg-dark">
+                                        <div className="media  profile-header">
+                                            
+                                            <span className="profile-image avatar w-120 mr-2">
+                                                <img className="" src={ user.avatar } alt="..."/>
+                                            </span>
+
+                                            <div className="media-body mb-2 text-white profile-card-header ">
+                                                <div>
+                                                    <h4 className="mt-1 mr-3 d-inline">{ user.name }</h4>
+                                                    <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
+                                                </div>
+
+                                                { user.id === myId ? 
+                                                    <button className="btn btn-sm text-white" onClick={ clickedEditProfile }>
+                                                        <u>Edit profile</u>
+                                                    </button>
+                                                    :
+                                                    null
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-                                    { user.id !== myId ? null : (
-                                        <button className="text-white" type="button" /* onClick={ clickedEditProfile } */><u>Edit profile</u></button>
-                                    )}
+
+                                    <div className="bg-light p-3 d-flex justify-content-end text-center w-100">
+                                        <ul className="list-inline mb-0">
+                                            <li className="list-inline-item">
+                                                <h5 className="font-weight-bold mb-0 d-block">{ user.gallery.length }</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
+                                            </li>
+                                            <li className="list-inline-item">
+                                                <h5 className="font-weight-bold mb-0 d-block">{ user.posts.length }</h5><small className="text-muted"> <i className="fa fa-pencil mr-1"></i>Posts</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="pt-4 px-4">
+                                    
+                                        <p>{ user.bio }</p>
+                                
+                                        <div className="m-2">
+                                        { user.style.map( dance => {
+                                            return  (
+                                                <span className="tag bg-secondary rounded text-white mr-1 p-2" key={dance}>{ dance }</span>
+                                            )
+                                        })}
+                                        </div>
+                                    </div>  
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="bg-light p-3 d-flex justify-content-end text-center w-100">
-                            <ul className="list-inline mb-0">
-                                <li className="list-inline-item">
-                                    <h5 className="font-weight-bold mb-0 d-block">241</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
-                                </li>
-                                <li className="list-inline-item">
-                                    <h5 className="font-weight-bold mb-0 d-block">{ user.posts.length }</h5><small className="text-muted"> <i className="fa fa-pencil mr-1"></i>Posts</small>
-                                </li>
-                            </ul>
-                        </div>
+                        }
 
-                        <div className="pt-4 px-4">
-                            <p>{ user.bio }</p>
-                            <div>
-                                <span className="tag bg-secondary rounded text-white mr-1">{ user.style }</span>
-                            </div>
-                        </div>
-
-                        <div className="py-4 px-4">
+                        <div className="py-4 px-4" style={showEditProfile? {opacity: '0.3'} : null}>
                             <div className="d-flex align-items-center justify-content-between mb-3">
                                 <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
                             </div>
@@ -100,17 +131,17 @@ const Profile = (props) => {
                                 </div>
                                 
                                 { user.posts.map( p => {
-                                return (
-                                    <ProfilePost key = { p.id }
-                                        id = { p.id }
-                                        user = { p.user }
-                                        body = { p.body }
-                                        image = { p.image }
-                                        createdAt = { p.createdAt }
-                                        comments = { p.comments }
-                                        likes = { p.likes.length }
-                                    />
-                                )
+                                    return (
+                                        <ProfilePost key = { p.id }
+                                            id = { p.id }
+                                            user = { p.user }
+                                            body = { p.body }
+                                            image = { p.image }
+                                            createdAt = { p.createdAt }
+                                            comments = { p.comments }
+                                            likes = { p.likes.length }
+                                        />
+                                    )
                                 })}
 
                             </div>

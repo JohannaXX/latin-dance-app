@@ -20,6 +20,14 @@ export const login = ({ email, password }) => http.post('/login', { email, pass
 
 export const getUser = (id) => http.get(`/user/${id}`);
 
+export const updateUser = (body) => http.patch(`/user/update`, body, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+});
+
+//export const updateUser = (id, body) => console.log({body});
+
 export const getContacts = () => http.get('/contacts');
 
 export const getNetwork = () => http.get('/network');
