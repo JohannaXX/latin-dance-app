@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { createUser } from '../../services/UserClient';
 import { allCountryCodes } from '../../helpers/CountryCodeDb';
 import { danceStyles } from '../../helpers/danceStyles';
 
-const EMAIL_PATTERN = /^(([^<>()[]\.,;:\s@"]+(\.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([^<>()[]\.,;:\s@"]+\.)+[^<>()[]\.,;:\s@"]{2,})$/i;
+const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const PASSWORD_PATTERN = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{8,}$/; 
 //as least: 1 number, 1 lower case, 1 uppercase, min 8 chars (letters, numbers or underscore),
@@ -54,9 +55,31 @@ const Signup = () => {
     })
     const [ currentDanceStyle, setCurrentDanceStyle ] = useState(null);
     const [ passwordMatching, setPasswordMatching] = useState(true);
+    const [ signinError, setSigninError ] = useState(null);
 
 
     console.log(state)
+
+    const handleSubmitForm = (e) => {
+        e.preventDefault();
+        const avatarImg = document.querySelector("#profileImage");
+
+        const formData = new FormData();
+
+        if (state.data.avatar) {
+            formData.append('avatar', avatarImg.files[0])
+        }
+
+        formData.append('body', JSON.stringify(state.data))
+
+        createUser(formData)
+            .then( user => {
+                console.log(user);
+                setSigninError('check your e-mail for account activation')
+            })
+            .catch(err => setSigninError(err))
+
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -139,9 +162,6 @@ const Signup = () => {
         setCurrentDanceStyle(null)
     }
 
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
-    }
 
     const checkPasswordMatching = (e) => {
         console.log('CHECKING')
@@ -156,7 +176,7 @@ const Signup = () => {
 
     return (
         <div className="profile-container">
-
+            
             <div className="row py-2 px-4">
                 <div className="col-sm-8 mx-auto">
                     <div className="bg-light shadow rounded overflow-hidden">
@@ -172,7 +192,7 @@ const Signup = () => {
                             <div className="col-12 media-body">
                                 <div className="row d-flex justify-content-center">
                                     <div className="col-9 col-sm-10 py-2 mb-3 rounded">
-                                
+                                        {/* { signinError && <div className="alert alert-danger">{ signinError }</div> } */}
                                         <form onSubmit={ handleSubmitForm }>
                                             <div className="mb-4 form-group">
                                                 <label htmlFor="name">
@@ -219,6 +239,7 @@ const Signup = () => {
                                                     className={`form-control ${state.touched.avatar && state.error.avatar ? "is-invalid" : ""}`}
                                                     onChange={ handleChange }
                                                     onBlur={ handleBlur }
+                                                    id="profileImage"
                                                     name="avatar"
                                                     type="file"
                                                     accept=".jpg,.png"
@@ -388,7 +409,7 @@ const Signup = () => {
 
                                             <button
                                                 className="btn btn-sm btn-secondary pull-right px-3"
-                                                /*  onClick={handlePublishPost} */
+                                                onClick={ handleSubmitForm }
                                                 disabled={ isError }
                                                 >
                                                 Save

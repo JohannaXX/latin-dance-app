@@ -18,6 +18,12 @@ http.interceptors.response.use(function(response) {
 
 export const login = ({ email, password }) => http.post('/login', { email, password })
 
+export const createUser = (body) => http.post('/user', body, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+});
+
 export const getUser = (id) => http.get(`/user/${id}`);
 
 export const updateUser = (body) => http.patch(`/user/update`, body, {

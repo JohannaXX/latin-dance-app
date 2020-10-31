@@ -77,71 +77,85 @@ const Login = () => {
 
     return (
         <div className="Login-container">
-            <div className="row">
-            <div className="col">
-                {loginError && <div className="alert alert-danger">{loginError}</div>}
 
-                <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Email</label>
+            <div className="row py-2 px-4">
+                <div className="col-sm-8 mx-auto">
+                    <div className="bg-light shadow rounded overflow-hidden">
 
-                    <input
-                    value={data.email}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    name="email"
-                    type="text"
-                    className={`form-control ${touch.email && error.email ? "is-invalid" : ""}`}
-                    placeholder="Enter email"
-                    />
+                        <div className="media p-3 bg-dark">
+                            <div className="media-body mb-1 text-white text-center">
+                                <h4>
+                                    Login
+                                </h4>
+                            </div>
+                        </div>
+                        <div className="row media">
+                            <div className="col-12 media-body">
+                                <div className="row d-flex justify-content-center">
+                                    <div className="col-9 col-sm-10 py-2 mb-3 rounded">
+                                    {/* {loginError && <div className="alert alert-danger">{loginError}</div>} */}
 
-                    <div className="invalid-feedback">email is wrong</div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group">
+                                                <label htmlFor="name">Email</label>
+
+                                                <input
+                                                value={data.email}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                name="email"
+                                                type="text"
+                                                className={`form-control ${touch.email && error.email ? "is-invalid" : ""}`}
+                                                placeholder="Enter email"
+                                                />
+
+                                                <div className="invalid-feedback">email is wrong</div>
+                                            </div>
+
+                                            <div className="form-group">
+                                                <label htmlFor="tagline">Password</label>
+
+                                                <input
+                                                name="password"
+                                                value={data.password}
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                type="password"
+                                                className={`form-control ${touch.password && error.password ? "is-invalid" : ""}`}
+                                                placeholder="Enter password"
+                                                />
+
+                                                <div className="invalid-feedback">error</div>
+                                            </div>
+
+                                            <div className="d-flex justify-content-end">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-secondary"
+                                                    disabled={isError}
+                                                >
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                        
+                                        <div id="social-login-area" className="text-center mt-3">
+                                            <div id="social-login-btns">
+                                                <a className="btn btn-secondary m-2" href="/auth/google"><i class="fa fa-google"></i> Log in with Google</a>
+                                                <a className="btn btn-secondary m-2" href="https://google.com"><i class="fa fa-google"></i> Log in with Facebook</a>
+                                                <a className="btn btn-secondary m-2" href="/auth/slack"><i class="fa fa-slack"></i> Log in with Slack</a>
+                                            </div>
+                                            <p className="mt-3">You don't have an account? <a href="/signup">register here</a> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="form-group">
-                    <label htmlFor="tagline">password</label>
-
-                    <input
-                    name="password"
-                    value={data.password}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    type="password"
-                    className={`form-control ${touch.password && error.password ? "is-invalid" : ""}`}
-                    placeholder="Enter password"
-                    />
-
-                    <div className="invalid-feedback">error</div>
-                </div>
-
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={isError}
-                >
-                    Submit
-                </button>
-                </form>
-            </div>
-
-            <div id="social-login-area">
-                <div id="social-login-btns">
-                    <a href="/auth/google"><i class="fa fa-google"></i> Log in with Google</a>
-                    <a href="https://google.com"><i class="fa fa-google"></i> Log in with Facebook</a>
-                    <a href="/auth/slack"><i class="fa fa-slack"></i> Log in with Slack</a>
-                </div>
-            </div>
-
-            <p>You don't have an account? <a href="/signup">register here</a> </p>
-
-            <div className="col">
-                <label>State</label>
-
-                <pre>{JSON.stringify(state, null, " ")}</pre>
-            </div>
             </div>
         </div>
-  );
+    );
 }
 
 export default Login;

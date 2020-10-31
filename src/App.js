@@ -15,25 +15,24 @@ import Chat from './components/Chats/Chat';
 import './App.css';
 
 function App() {
-  return (
-    <div className="app-container">
-      <Navbar />
+    return (
+        <div className="app-container">
+            <Navbar />
 
-        <Switch>
-          
-          <AuthenticatedRoute  exact path="/chat/:id" component={Chat}/>
-          <AuthenticatedRoute  exact path="/chats" component={ChatList}/>
-          <AuthenticatedRoute  exact path="/post/:id" component={PostDetail}/>
-          <AuthenticatedRoute  exact path="/network" component={Network}/>
-          <AuthenticatedRoute  exact path="/contacts" component={Contacts}/>
-          <AuthenticatedRoute  exact path="/user/:id" component={Profile}/>
-          <NotAuthenticatedRoute  exact path="/login" component={Login}/>
-          <AuthenticatedRoute  exact path="/signup" component={Signup}/>
-          <AuthenticatedRoute exact path="/" component={Home}/>
-        </Switch>
+            <Switch>
+                <AuthenticatedRoute exact path="/chat/:id" component={Chat} />
+                <AuthenticatedRoute exact path="/chats" component={ChatList} />
+                <AuthenticatedRoute exact path="/post/:id" component={PostDetail} />
+                <AuthenticatedRoute exact path="/network" component={Network} />
+                <AuthenticatedRoute exact path="/contacts" component={Contacts} />
+                <AuthenticatedRoute exact path="/user/:id" component={Profile} />
+                <NotAuthenticatedRoute exact path="/login" component={Login} />
+                <NotAuthenticatedRoute exact path="/signup" component={Signup} />
+                <AuthenticatedRoute exact path="/" component={Home} />
+            </Switch>
 
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;
