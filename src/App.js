@@ -28,7 +28,7 @@ function App() {
           <AuthenticatedRoute  exact path="/contacts" component={Contacts}/>
           <AuthenticatedRoute  exact path="/user/:id" component={Profile}/>
           <NotAuthenticatedRoute  exact path="/login" component={Login}/>
-          <NotAuthenticatedRoute  exact path="/signup" component={Signup}/>
+          <AuthenticatedRoute  exact path="/signup" component={Signup}/>
           <AuthenticatedRoute exact path="/" component={Home}/>
         </Switch>
 

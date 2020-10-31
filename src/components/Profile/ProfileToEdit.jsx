@@ -1,7 +1,9 @@
 import React, { useEffect, useState, cleanup } from 'react';
+import { Redirect } from 'react-router-dom';
 import { allCountryCodes } from '../../helpers/CountryCodeDb';
 import { danceStyles } from '../../helpers/danceStyles';
 import { updateUser } from '../../services/UserClient';
+import { deleteUser } from '../../services/UserClient';
 
 const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
     const [ state, setState ] = useState({
@@ -15,7 +17,8 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
         postsLength: 0
     });
     const [ avatar, setAvatar ] = useState(null);
-    const [ currentDanceStyle, setCurrentDanceStyle ] = useState('')
+    const [ currentDanceStyle, setCurrentDanceStyle ] = useState('');
+    const [ userIsCancelled, setUserIsCancelled ] =  useState(false)
 
     useEffect(() => {
         setState({
@@ -30,7 +33,7 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
         })
 
         return () => cleanup
-    }, [])
+    }, [user])
 
     const clickedSaveChanges = () => {
         const avatarImg = document.querySelector("#avatar");
@@ -91,9 +94,18 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
         setAvatar(true)
     }
 
+    const handleCancelProfile = () => {
+        deleteUser(state.id)
+            .then(() => setUserIsCancelled(true))
+            .catch(err => console.log(err))
+    }
 
     if (!state.name) {
         return <div>Loading...</div>
+    }
+
+    if (userIsCancelled) {
+        return <Redirect to="/signup" />
     }
 
     return (
@@ -106,7 +118,7 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
                             { avatar? 
                                 <u>ok</u>
                                 :
-                                <u>upload image</u> 
+                                <u>new image</u> 
                             }
                             <input 
                                 style={{opacity: '0', position: 'absolute', top: '0'}} 
@@ -150,27 +162,36 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
                                 </select>
                             </div> 
                         </div>
-
-                        <div>
-                            <button className="btn btn-sm text-warning" onClick={ deactivateView }>
-                                <u>Cancel changes</u>
-                            </button>
-                            <button className="btn btn-sm text-warning" onClick={ clickedSaveChanges }>
-                                <u>Save changes</u>
-                            </button>
-                        </div>
-                       
                     </div>
+                </div>
+                <div className="">
+                    <button 
+                        className="btn btn-sm text-warning border border-warning" 
+                        onClick={ deactivateView }>
+                        Cancel changes
+                    </button>
+                    <button 
+                        className="btn btn-sm text-warning border border-warning mx-1 my-2" 
+                        onClick={ clickedSaveChanges }>
+                        Save changes
+                    </button>
                 </div>
             </div>
 
-            <div className="bg-light p-3 d-flex justify-content-end text-center w-100">
+            <div className="bg-light p-3 d-flex justify-content-between text-center w-100">
+                <button 
+                    className="btn btn-sm text-danger border border-danger"
+                    onClick={ handleCancelProfile }>
+                    Cancel profile
+                </button>
                 <ul className="list-inline mb-0">
                     <li className="list-inline-item">
-                        <h5 className="font-weight-bold mb-0 d-block">{ state.galleryLength }</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
+                        <h5 className="font-weight-bold mb-0 d-block">{ state.galleryLength }</h5>
+                        <small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
                     </li>
                     <li className="list-inline-item">
-                        <h5 className="font-weight-bold mb-0 d-block">{ state.postsLength }</h5><small className="text-muted"> <i className="fa fa-pencil mr-1"></i>Posts</small>
+                        <h5 className="font-weight-bold mb-0 d-block">{ state.postsLength }</h5>
+                        <small className="text-muted"> <i className="fa fa-pencil mr-1"></i>Posts</small>
                     </li>
                 </ul>
             </div>

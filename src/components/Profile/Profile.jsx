@@ -9,7 +9,6 @@ const Profile = (props) => {
     const [ user, setUser ] = useState({});
     const [ showEditProfile, setShowEditProfile ] = useState(false);
     const [ error, setError ] = useState(null);
-    const [ profileUpdated, setProfileUpdate ] = useState(false);
     const [ postToPublish, setPostToPublish ] = useState("");
     const [ imageToPublish, setImageToPublish ] = useState(null);
     const [ reload, setReload ] = useState(false);
@@ -21,7 +20,7 @@ const Profile = (props) => {
             .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
-    }, [props.match.params.id, profileUpdated, reload])
+    }, [props.match.params.id, reload])
 
     const clickedEditProfile = () => {
         setShowEditProfile(true)
@@ -69,6 +68,10 @@ const Profile = (props) => {
             .catch(err => setError(err.response?.data?.message))
     }
 
+    const handleReload = () => {
+        setReload(!reload)
+    }
+
     if (!user.name) {
         return <div className="text-center">Loading...</div>
     } 
@@ -99,17 +102,26 @@ const Profile = (props) => {
                                         <div className="media  profile-header">
                                             
                                             <span className="profile-image avatar w-120 mr-2">
-                                                <img className="" src={ user.avatar } alt="..."/>
+                                                <img 
+                                                    className="" 
+                                                    src={ user.avatar } 
+                                                    alt="..."
+                                                />
                                             </span>
 
                                             <div className="media-body mb-2 text-white profile-card-header ">
                                                 <div>
-                                                    <h4 className="mt-1 mr-3 d-inline">{ user.name }</h4>
+                                                    <h4 
+                                                        className="mt-1 mr-3 d-inline">
+                                                        { user.name }
+                                                    </h4>
                                                     <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
                                                 </div>
 
                                                 { user.id === myId ? 
-                                                    <button className="btn btn-sm text-white" onClick={ clickedEditProfile }>
+                                                    <button 
+                                                        className="btn btn-sm text-white" 
+                                                        onClick={ clickedEditProfile }>
                                                         <u>Edit profile</u>
                                                     </button>
                                                     :
@@ -137,7 +149,11 @@ const Profile = (props) => {
                                         <div className="m-2">
                                         { user.style.map( dance => {
                                             return  (
-                                                <span className="tag bg-secondary rounded text-white mr-1 p-2" key={dance}>{ dance }</span>
+                                                <span 
+                                                    className="tag bg-secondary rounded text-white mr-1 p-2" 
+                                                    key={dance}>
+                                                    { dance }
+                                                </span>
                                             )
                                         })}
                                         </div>
@@ -148,23 +164,51 @@ const Profile = (props) => {
 
                         <div className="py-4 px-4" style={showEditProfile? {opacity: '0.3'} : null}>
                             <div className="d-flex align-items-center justify-content-between mb-3">
-                                <h5 className="mb-0">Recent photos</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
+                                <h5 
+                                    className="mb-0">
+                                    Recent photos
+                                </h5>
+                                <a 
+                                    href="https://google.com" 
+                                    className="btn btn-link text-muted">
+                                    Show all
+                                </a>
                             </div>
 
-                           {/*  { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> } */}
+                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
-                                    <h5 className="mb-0">Recent posts</h5><a href="https://google.com" className="btn btn-link text-muted">Show all</a>
+                                    <h5 className="mb-0">
+                                        Recent posts
+                                    </h5>
+                                    <a 
+                                        href="https://google.com" 
+                                        className="btn btn-link text-muted">
+                                        Show all
+                                    </a>
                                 </div>
 
                                 { user.id === myId ? 
                                     <div className="py-2 px-4 mb-3 bg-light rounded shadow-sm">
 
-                                        <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
+                                        <textarea 
+                                            className="form-control" 
+                                            onChange={ handleWritePost } 
+                                            value={ postToPublish } 
+                                            rows="2" 
+                                            placeholder="What are you thinking?"
+                                        ></textarea>
                                         <div className=" clearfix">
-                                            <input name="file" id="file" type="file"></input>
-                                            <button className="btn btn-sm btn-secondary pull-right" onClick={ handlePublishPost } type="button">
+                                            <input 
+                                                name="file" 
+                                                id="file" 
+                                                type="file"
+                                            ></input>
+                                            <button 
+                                                className="btn btn-sm btn-secondary pull-right" 
+                                                onClick={ handlePublishPost } 
+                                                type="button">
                                                 Share
                                             </button>
                                         </div>
@@ -176,7 +220,8 @@ const Profile = (props) => {
 
                                 { user.posts.map( p => {
                                     return (
-                                        <ProfilePost key = { p.id }
+                                        <ProfilePost 
+                                            key = { p.id }
                                             id = { p.id }
                                             user = { p.user }
                                             body = { p.body }
@@ -184,6 +229,7 @@ const Profile = (props) => {
                                             createdAt = { p.createdAt }
                                             comments = { p.comments }
                                             likes = { p.likes.length }
+                                            requestReload = { handleReload }
                                         />
                                     )
                                 })}

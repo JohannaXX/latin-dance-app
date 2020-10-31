@@ -1,11 +1,12 @@
 import React, { useState }  from 'react';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import { updatePost } from '../../../services/PostClient';
+import { deletePost } from '../../../services/PostClient';
 import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import ProfilePostComments from './ProfilePostComments';
 
-const ProfilePost = ({ id, user, body, image, createdAt, comments, likes }) => {
+const ProfilePost = ({ id, user, body, image, createdAt, comments, likes, requestReload }) => {
     const [ text, setText ] = useState( body )
     const [ showComments, setShowComments ] = useState(false);
     const [ allComments, setAllComments ] = useState(comments)
@@ -56,32 +57,89 @@ const ProfilePost = ({ id, user, body, image, createdAt, comments, likes }) => {
             })
     }
 
+    const handelCancelPost = () => {
+        deletePost(id)
+            .then( () => requestReload())
+            .catch(err => setError(err.response?.data?.message))
+
+    }
+
     if ( error ) {
         return <div>{ error }</div>
     }
 
     return (
         <div className="py-2 px-4 mb-3 bg-light rounded shadow-sm">
-            <p className="small text-muted text-right">{ timeUntilNow(createdAt) }</p>
+            <p 
+                className="small text-muted text-right">
+                { timeUntilNow(createdAt) }
+            </p>
             { showEditPost ? 
                 <div>     
-                    <textarea className="d-block w-100" value={ editPost } onChange={ handleEditPost } rows="8"></textarea>
-                    <button className="d-block m-auto" onClick={ submitPostUpdate }>save changes</button>
+                    <textarea 
+                        className="d-block w-100" 
+                        value={ editPost } 
+                        onChange={ handleEditPost } 
+                        rows="8">
+                    </textarea>
+                    <button 
+                        className="d-block m-auto" 
+                        onClick={ submitPostUpdate }>
+                        save changes
+                    </button>
                 </div>
                 :
-                <p className="font-italic mb-0">{ text }</p>
+                <p 
+                    className="mb-0">
+                    { text }
+                </p>
+            }
+
+            { image ? 
+                <div className="d-flex justify-content-center">
+                    <img 
+                        className="boder border-white shadow rounded m-2"
+                        style={{maxWidth: '350px', maxHeight: '350px'}}
+                        src={image}
+                        alt=".."
+                    />
+                </div>
+                :
+                null
             }
 
             <ul className="list-inline small text-muted mt-3 mb-0">
-                <li className="list-inline-item" onClick={ handleLike } >
-                    <i className="fa fa-heart-o mr-2"></i>{ allLikes } Likes &nbsp;| 
+
+                <li 
+                    className="list-inline-item" 
+                    onClick={ handleLike } 
+                    >
+                    <i className="fa fa-heart-o mr-2"></i>{ allLikes } <u>Likes</u> &nbsp;| 
                 </li>
-                <li onClick={toggleShowComments} className="list-inline-item">
-                    <i className="fa fa-comment-o mr-2"></i>{ comments.length} Comments
+                <li 
+                    className="list-inline-item"
+                    onClick={toggleShowComments}>
+                    <i className="fa fa-comment-o mr-2"></i>{ comments.length} <u>Comments</u>
                 </li>
-                {user.id !== myId ? null : (
-                    <li className="list-inline-item" onClick={ clickedEditPost }><u>Edit post</u></li>
-                )} 
+
+                { user.id === myId ? 
+                    <div className="d-inline mx-1">
+                        <li 
+                            className="list-inline-item mx-2" 
+                            onClick={ handelCancelPost }
+                            >
+                            <u>Cancel post</u>
+                        </li>
+                        <li 
+                            className="list-inline-item mx-2" 
+                            onClick={ clickedEditPost }
+                            >
+                            <u>Edit post</u>
+                        </li>
+                    </div>
+                    :
+                    null
+                } 
             </ul>
 
             { showComments ? 
