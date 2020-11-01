@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { login } from '../../services/UserClient';
+import { loginWithSlack } from '../../services/UserClient';
+import { loginWithGoogle } from '../../services/UserClient';
+import { loginWithFacebook} from '../../services/UserClient';
 
 const validations = {
     email: v => v.length,
     password: v => v.length
 };
 
-const Login = () => {
+const Login = (props) => {
     const [state, setState] = useState({
         data: {
           email: "",
@@ -21,8 +25,10 @@ const Login = () => {
     })
 
     const [loginError, setLoginError] = useState(null)
+    const [ redirectToSlackAuth, setRedirectToSlackAuth ] = useState(false)
 
     const authContext = useAuthContext()
+
 
     const { data, error, touch } = state
 
@@ -71,6 +77,16 @@ const Login = () => {
             }
           }
         })
+    }
+
+
+    const handleLoginWithGoogle = () => {
+        loginWithGoogle()
+            .then( res => console.log(res))
+            .catch( err => setLoginError(err.response?.data?.message))
+    }
+    const handleLoginWithFacebook = () => {
+        loginWithFacebook()
     }
 
     const isError = Object.values(error).some(err => err);
@@ -141,9 +157,24 @@ const Login = () => {
                                         
                                         <div id="social-login-area" className="text-center mt-3">
                                             <div id="social-login-btns">
-                                                <a className="btn btn-secondary m-2" href="/auth/google"><i class="fa fa-google"></i> Log in with Google</a>
-                                                <a className="btn btn-secondary m-2" href="https://google.com"><i class="fa fa-google"></i> Log in with Facebook</a>
-                                                <a className="btn btn-secondary m-2" href="/auth/slack"><i class="fa fa-slack"></i> Log in with Slack</a>
+                                                <a
+                                                    className="btn btn-secondary text-white m-2 px-2 py-1 rounded"
+                                                    href="http://localhost:3000/auth/google"
+                                                    >
+                                                    <i className="fa fa-slack"></i> Log in with Google
+                                                </a>
+                                                <button 
+                                                    className="btn btn-secondary m-2" 
+                                                    onClick={ handleLoginWithFacebook }
+                                                    >
+                                                    <i className="fa fa-google"></i> Log in with Facebook
+                                                </button>                                                
+                                                <a
+                                                    className="btn btn-secondary text-white m-2 px-2 py-1 rounded"
+                                                    href="http://localhost:3000/auth/slack"
+                                                    >
+                                                    <i className="fa fa-slack"></i> Log in with Slack
+                                                </a>
                                             </div>
                                             <p className="mt-3">You don't have an account? <a href="/signup">register here</a> </p>
                                         </div>

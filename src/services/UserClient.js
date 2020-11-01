@@ -16,13 +16,20 @@ http.interceptors.response.use(function(response) {
     return Promise.reject(error);
 });
 
-export const login = ({ email, password }) => http.post('/login', { email, password })
 
 export const createUser = (body) => http.post('/user', body, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data'
     }
 });
+
+export const activateUser = (token) => http.get(`/activation/${token}`);
+
+export const login = ({ email, password }) => http.post('/login', { email, password });
+
+export const loginWithGoogle = () => http.get('/auth/google');
+
+export const loginWithFacebook = () => http.get('/auth/slack');
 
 export const getUser = (id) => http.get(`/user/${id}`);
 
@@ -38,6 +45,6 @@ export const getContacts = () => http.get('/contacts');
 
 export const getNetwork = () => http.get('/network');
 
-export const updateMatch = (id, status) => http.patch(`/match/${id}/update`, { status })
+export const updateMatch = (id, status) => http.patch(`/match/${id}/update`, { status });
 
-export const requestCreateMatch = (id) => http.post('/match', { id })
+export const requestCreateMatch = (id) => http.post('/match', { id });
