@@ -29,7 +29,7 @@ export const login = ({ email, password }) => http.post('/login', { email, pass
 
 export const loginWithGoogle = () => http.get('/auth/google');
 
-export const loginWithFacebook = () => http.get('/auth/slack');
+export const loginWithFacebook = (body) => http.post('/facebook/login', body);
 
 export const getUser = (id) => http.get(`/user/${id}`);
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { login } from '../../services/UserClient';
 import { loginWithSlack } from '../../services/UserClient';
@@ -22,9 +23,9 @@ const Login = (props) => {
           password: true
         },
         touch: {},
-    })
+    }) 
 
-    const [loginError, setLoginError] = useState(null)
+    const [ loginError, setLoginError] = useState(null)
     const [ redirectToSlackAuth, setRedirectToSlackAuth ] = useState(false)
 
     const authContext = useAuthContext()
@@ -79,15 +80,10 @@ const Login = (props) => {
         })
     }
 
+    const handleLoginWithFacebook = (user) => {
+        loginWithFacebook(user)
+    }
 
-    const handleLoginWithGoogle = () => {
-        loginWithGoogle()
-            .then( res => console.log(res))
-            .catch( err => setLoginError(err.response?.data?.message))
-    }
-    const handleLoginWithFacebook = () => {
-        loginWithFacebook()
-    }
 
     const isError = Object.values(error).some(err => err);
 
@@ -158,19 +154,24 @@ const Login = (props) => {
                                         <div id="social-login-area" className="text-center mt-3">
                                             <div id="social-login-btns">
                                                 <a
-                                                    className="btn btn-secondary text-white m-2 px-2 py-1 rounded"
+                                                    className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
                                                     href="http://localhost:3000/auth/google"
                                                     >
-                                                    <i className="fa fa-slack"></i> Log in with Google
-                                                </a>
-                                                <button 
-                                                    className="btn btn-secondary m-2" 
-                                                    onClick={ handleLoginWithFacebook }
-                                                    >
-                                                    <i className="fa fa-google"></i> Log in with Facebook
-                                                </button>                                                
+                                                    <i className="fa fa-google"></i> Log in with Google
+                                                </a>  
+                                                <div className="d-inline border border-secondary rounded m-2 px-2 py-2 text-primary">
+                                                    <i className="fa fa-facebook"></i>
+                                                    <FacebookLogin
+                                                        callback={ handleLoginWithFacebook }
+                                                        autoLoad={true}
+                                                        cssClass="btnFacebook"
+                                                        style={{borderRadius: '5px', backgroundColor: 'green !important'}}
+                                                        appId="3166714306789835"
+                                                        fields="name,email,picture"
+                                                    />                                          
+                                                </div>   
                                                 <a
-                                                    className="btn btn-secondary text-white m-2 px-2 py-1 rounded"
+                                                    className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
                                                     href="http://localhost:3000/auth/slack"
                                                     >
                                                     <i className="fa fa-slack"></i> Log in with Slack

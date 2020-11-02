@@ -1,0 +1,13 @@
+.popup-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.popup-window {
+    position: absolute;
+    top: 20px;
+    left: calc(50vw - 100px);
+    width: 200px;
+}
