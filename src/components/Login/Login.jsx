@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import FacebookLogin from 'react-facebook-login';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { login } from '../../services/UserClient';
-import { loginWithSlack } from '../../services/UserClient';
-import { loginWithGoogle } from '../../services/UserClient';
 import { loginWithFacebook} from '../../services/UserClient';
+
 
 const validations = {
     email: v => v.length,
@@ -25,8 +23,7 @@ const Login = (props) => {
         touch: {},
     }) 
 
-    const [ loginError, setLoginError] = useState(null)
-    const [ redirectToSlackAuth, setRedirectToSlackAuth ] = useState(false)
+    const [ loginError, setLoginError] = useState(false)
 
     const authContext = useAuthContext()
 
@@ -82,6 +79,9 @@ const Login = (props) => {
 
     const handleLoginWithFacebook = (user) => {
         loginWithFacebook(user)
+            .then( u => {
+                authContext.login(u)
+            })
     }
 
 
@@ -105,7 +105,8 @@ const Login = (props) => {
                             <div className="col-12 media-body">
                                 <div className="row d-flex justify-content-center">
                                     <div className="col-9 col-sm-10 py-2 mb-3 rounded">
-                                    {/* {loginError && <div className="alert alert-danger">{loginError}</div>} */}
+
+                                    {loginError && <div className="alert alert-danger">{loginError}</div>}
 
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">

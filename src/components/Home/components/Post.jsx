@@ -7,18 +7,17 @@ import { handleLikes } from '../../../services/PostClient';
 import Comment from './Comment';
 import './Post.css';
 
-const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , requestReload}) => {
+const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , requestReload}) => {
     const [ text, setText ] = useState( body );
     const [ allComments, setAllComments ] = useState(comments)
     const [ showComments, setShowComments ] = useState(false);
+    const [ commentToPublish, setCommentToPublish] = useState('');
     const [ allLikes, setAllLikes ] = useState(likes);
     const [ showEditPost, setShowEditPost ] = useState(false);
     const [ editPost, setEditPost ] = useState(body);
-    const [ commentToPublish, setCommentToPublish] = useState('');
     const [ reload, setReload ] = useState(false);
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
-
 
     const toggleShowComments = () => {
         setShowComments(!showComments);
@@ -54,14 +53,20 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , r
     const handlePublishComment = () => {
         createComment(id, commentToPublish)
             .then( c => {
+                
                 setAllComments( prev => {
-                    return [...prev, c]
+                    return [...prev, {
+                        ...c,
+                        'user': user
+                    }]
                 })
+                
+                setCommentToPublish('');
             })
     }
 
     const handelCancelPost = () => {
-        deletePost(id)
+        deletePost(id, {body: photo})
             .then( () => requestReload())
             .catch(err => setError(err.response?.data?.message))
 
@@ -98,9 +103,9 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , r
                 }
 
 
-                { !image ? null : 
+                { photo &&
                     <div className="py-2 m-auto">
-                        <img className="posted-image m-auto" src={image} alt=".." />
+                        <img className="posted-image m-auto" src={photo} alt=".." />
                     </div>
                 }
 
@@ -125,13 +130,6 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , r
 
                 { !showComments ? null : (
                     <div>
-                        <textarea className="form-control" onChange={ handleWriteComment } value={ commentToPublish } rows="4" placeholder="Comment post"></textarea>
-                        <div className=" clearfix">
-                            <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishComment } type="button">
-                                <i className="fa fa-pencil fa-fw"></i> Post comment
-                            </button>
-                        </div>
-
                         {allComments.map(c => {
                             return (
                                 <Comment key={c.id}
@@ -143,6 +141,14 @@ const Post = ({ id, user, body, image, likes, comments, createdAt, updatedAt , r
                                 />
                             )
                         })}
+
+                        <textarea className="form-control" onChange={ handleWriteComment } value={ commentToPublish } rows="4" placeholder="Comment post"></textarea>
+                        <div className=" clearfix">
+                            <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishComment } type="button">
+                                <i className="fa fa-pencil fa-fw"></i> Post comment
+                            </button>
+                        </div>
+                        
                     </div>
                 )}
 

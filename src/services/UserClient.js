@@ -31,6 +31,8 @@ export const loginWithGoogle = () => http.get('/auth/google');
 
 export const loginWithFacebook = (body) => http.post('/facebook/login', body);
 
+export const logout = () => http.post('/logout');
+
 export const getUser = (id) => http.get(`/user/${id}`);
 
 export const updateUser = (body) => http.patch(`/user/update`, body, {

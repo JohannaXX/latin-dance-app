@@ -28,7 +28,7 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
             country: user.country,
             bio: user.bio,
             danceStyles: user.style,
-            galleryLength: user.gallery.length,
+            galleryLength: user.photos.length,
             postsLength: user.posts.length
         })
 

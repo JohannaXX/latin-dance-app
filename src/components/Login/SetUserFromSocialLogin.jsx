@@ -1,5 +1,4 @@
-import { cleanup } from '@testing-library/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { Redirect } from 'react-router-dom';
 import { getUser } from '../../services/UserClient';

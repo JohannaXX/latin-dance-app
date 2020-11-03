@@ -15,9 +15,10 @@ const Network = () => {
 
     useEffect(() => {
         getNetwork()
-            .then( res => {
-                setData(res.users) 
-                setNetwork(res.users)
+            .then( users => {
+                console.log(users);
+                setData(users.orderedUsers) 
+                setNetwork(users.orderedUsers)
                 setShowContacts(true)
             })
             .catch(err => setError(err.response?.data?.message) )

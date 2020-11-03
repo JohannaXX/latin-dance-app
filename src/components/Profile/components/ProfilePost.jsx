@@ -6,7 +6,7 @@ import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import ProfilePostComments from './ProfilePostComments';
 
-const ProfilePost = ({ id, user, body, image, createdAt, comments, likes, requestReload }) => {
+const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, requestReload }) => {
     const [ text, setText ] = useState( body )
     const [ showComments, setShowComments ] = useState(false);
     const [ allComments, setAllComments ] = useState(comments)
@@ -58,7 +58,7 @@ const ProfilePost = ({ id, user, body, image, createdAt, comments, likes, reques
     }
 
     const handelCancelPost = () => {
-        deletePost(id)
+        deletePost(id, {body: photo})
             .then( () => requestReload())
             .catch(err => setError(err.response?.data?.message))
 
@@ -95,12 +95,12 @@ const ProfilePost = ({ id, user, body, image, createdAt, comments, likes, reques
                 </p>
             }
 
-            { image ? 
+            { photo ? 
                 <div className="d-flex justify-content-center">
                     <img 
                         className="boder border-white shadow rounded m-2"
                         style={{maxWidth: '350px', maxHeight: '350px'}}
-                        src={image}
+                        src={photo}
                         alt=".."
                     />
                 </div>

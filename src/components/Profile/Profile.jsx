@@ -7,16 +7,34 @@ import PhotoGallery from './components/PhotoGallery';
 
 const Profile = (props) => {
     const [ user, setUser ] = useState({});
+    const [ gallery, setGallery ] = useState([]);
+    const [ posts, setPosts ] = useState([]);
     const [ showEditProfile, setShowEditProfile ] = useState(false);
     const [ error, setError ] = useState(null);
     const [ postToPublish, setPostToPublish ] = useState("");
-    const [ imageToPublish, setImageToPublish ] = useState(null);
     const [ reload, setReload ] = useState(false);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
     useEffect(() => {
         getUser(props.match.params.id)
-            .then( res => setUser(res))
+            .then( u => {
+                console.log(u)
+                if ( u.photos.length >= 4 ){
+                    const photo = u.photos;
+                    setGallery([photo[0], photo[1], photo[2], photo[3]])
+                } else {
+                    setGallery(u.photos)
+                }
+
+                if ( u.posts.length >= 4 ){
+                    const post = u.posts;
+                    setPosts([post[0], post[1], post[2], post[3]])
+                } else {
+                    setPosts(u.posts)
+                }
+
+                setUser(u)
+            })
             .catch(err => setError(err.response?.data?.message))
 
         return () =>  cleanup 
@@ -66,6 +84,24 @@ const Profile = (props) => {
                 setReload(true)
             })
             .catch(err => setError(err.response?.data?.message))
+    }
+
+    const toggleAllPhotos = () => {
+        if ( gallery.length <= 4 ) {
+            setGallery(user.gallery)
+        } else {
+            const photo = user.gallery;
+            setGallery([photo[0], photo[1], photo[2], photo[3]])
+        }
+    }
+
+    const toggleAllPosts = () => {
+        if ( posts.length <= 4 ) {
+            setPosts(user.posts)
+        } else {
+            const post = user.posts;
+            setPosts([post[0], post[1], post[2], post[3]])
+        }
     }
 
     const handleReload = () => {
@@ -134,7 +170,7 @@ const Profile = (props) => {
                                     <div className="bg-light p-3 d-flex justify-content-end text-center w-100">
                                         <ul className="list-inline mb-0">
                                             <li className="list-inline-item">
-                                                <h5 className="font-weight-bold mb-0 d-block">{ user.gallery.length }</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
+                                               <h5 className="font-weight-bold mb-0 d-block">{ user.photos.length }</h5><small className="text-muted"> <i className="fa fa-picture-o mr-1"></i>Photos</small>
                                             </li>
                                             <li className="list-inline-item">
                                                 <h5 className="font-weight-bold mb-0 d-block">{ user.posts.length }</h5><small className="text-muted"> <i className="fa fa-pencil mr-1"></i>Posts</small>
@@ -168,25 +204,26 @@ const Profile = (props) => {
                                     className="mb-0">
                                     Recent photos
                                 </h5>
-                                <a 
-                                    href="https://google.com" 
-                                    className="btn btn-link text-muted">
-                                    Show all
-                                </a>
+                                <button  
+                                    className="btn btn-link text-muted"
+                                    onClick={ toggleAllPhotos }
+                                    >
+                                    Show all photos
+                                </button>
                             </div>
 
-                            { !user.gallery ? null : <PhotoGallery images = { user.gallery } /> }
+                            { user.photos && <PhotoGallery images = { gallery } /> }
                             
                             <div className="py-4">
                                 <div className="d-flex align-items-center justify-content-between mb-3">
                                     <h5 className="mb-0">
                                         Recent posts
                                     </h5>
-                                    <a 
-                                        href="https://google.com" 
-                                        className="btn btn-link text-muted">
-                                        Show all
-                                    </a>
+                                    <button 
+                                        className="btn btn-link text-muted"
+                                        onClick={ toggleAllPosts }>
+                                        Show all posts
+                                    </button>
                                 </div>
 
                                 { user.id === myId ? 
@@ -218,14 +255,14 @@ const Profile = (props) => {
                                     null
                                 }
 
-                                { user.posts.map( p => {
+                                { posts.map( p => {
                                     return (
                                         <ProfilePost 
                                             key = { p.id }
                                             id = { p.id }
                                             user = { p.user }
                                             body = { p.body }
-                                            image = { p.image }
+                                            photo = { p.image }
                                             createdAt = { p.createdAt }
                                             comments = { p.comments }
                                             likes = { p.likes.length }

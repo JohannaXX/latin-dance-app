@@ -10,7 +10,6 @@ const Home = () => {
     const [ search, setSearch ] = useState("");
     const [ posts, setPosts ] = useState([]);
     const [ postToPublish, setPostToPublish ] = useState("");
-    const [ imageToPublish, setImageToPublish ] = useState(null);
     const [ reload, setReload ] = useState(false);
     const [ error, setError ] = useState(null);
 
@@ -45,15 +44,15 @@ const Home = () => {
         setPostToPublish(e.target.value);
     }
 
-    const handleAddImage = (e) => {
-        e.preventDefault();
-    }
-
     const handlePublishPost = (e) => {
         e.preventDefault();
         const formData = new FormData()
         const image = document.querySelector("#file");
-        formData.append('image', image.files[0])
+
+        if (image) {
+            formData.append('image', image.files[0])
+        }
+
         formData.append('body', postToPublish)
 
         if (!postToPublish) {
@@ -63,7 +62,6 @@ const Home = () => {
         createPosts( formData)
             .then( () => {
                 setPostToPublish("")
-                setImageToPublish(null)
                 setReload(true)
             })
             .catch(err => setError(err.response?.data?.message))
@@ -91,7 +89,7 @@ const Home = () => {
 
                             <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
                             <div className=" clearfix">
-                                <input name="file" id="file" type="file" onChange={ handleAddImage }></input>
+                                <input name="file" id="file" type="file"></input>
                                 <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishPost } type="button">
                                     <i className="fa fa-pencil fa-fw" /* className="btn-icon fa fa-upload"  */></i> Share
                                 </button>
@@ -126,7 +124,7 @@ const Home = () => {
                                         id = { p.id }
                                         user = { p.user }
                                         body = { p.body }
-                                        image = { p.image }
+                                        photo = { p.image }
                                         likes = { p.likes.length }
                                         comments = { p.comments }
                                         createdAt = { p.createdAt }

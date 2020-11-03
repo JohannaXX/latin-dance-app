@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { activateUser } from '../../services/UserClient';
-import { useAuthContext } from '../../contexts/AuthContext';
 
 const Activation = (props) => {
     const [ forwardToLogin, setForwardToLogin ] = useState(false);
     const token = props.match.params.token;
-    const authContext = useAuthContext()
 
     activateUser(token)
         .then( () => {  

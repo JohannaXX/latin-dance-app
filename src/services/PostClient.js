@@ -16,6 +16,7 @@ http.interceptors.response.use(function(response) {
     return Promise.reject(error);
 });
 
+
 export const getPosts = () => http.get('/');
 
 export const createPosts = ( body ) => http.post('/post', body , {
@@ -25,7 +26,8 @@ export const createPosts = ( body ) => http.post('/post', body , {
 });
 
 export const updatePost = ( id, body ) => http.patch(`/post/${id}/update`, body);
-export const deletePost = ( id ) => http.delete(`/post/${id}`);
+
+export const deletePost = ( id, body ) => http.post(`/post/${id}/delete`, body);
 
 export const createComment = ( id, text ) => http.post(`/post/${id}/comments`, { body: text });
 

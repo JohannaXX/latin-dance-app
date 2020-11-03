@@ -20,10 +20,14 @@ const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnActi
                     <a href={"/user/" + id} className="profile-link">
                         <h5>{ name }</h5>
                     </a>
-                    <p className="text-muted">{ style }</p>
+                    <p className="text-muted">
+                        { style.map( s => {
+                            return <span className="mr-2">{ s }</span>
+                        })}
+                    </p>
                     <p>{ bio }</p>
                 </div>
-                { !btnAction ? null : (
+                { btnAction &&
                     <div className="col-md-2 col-sm-2 text-center">
                         <form onSubmit={ btnAction }>
                             <button type="submit" className="btn btn-primary m-auto">{ btnText }</button>
@@ -34,7 +38,7 @@ const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnActi
                             </form>
                         ) : null}
                     </div>
-                )}
+                }
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ const PhotoGallery = ({ images }) => {
             { images.map( (img, ind) => {
                 return (
                     <div className="col-lg-6 mb-2 pr-lg-1 text-center" key={ ind }>
-                        <img className="img-fluid rounded shadow-sm w-photo m-auto" src={ img } alt=".."/>
+                        <img className="img-fluid rounded shadow-sm w-photo m-auto" src={ img.photo } alt=".."/>
                     </div>
                 )
             })
