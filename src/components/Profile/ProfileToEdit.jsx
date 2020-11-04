@@ -18,7 +18,7 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
     });
     const [ avatar, setAvatar ] = useState(null);
     const [ currentDanceStyle, setCurrentDanceStyle ] = useState('');
-    const [ userIsCancelled, setUserIsCancelled ] =  useState(false)
+    const [ userIsCancelled, setUserIsCancelled ] =  useState(false);
 
     useEffect(() => {
         setState({
@@ -47,7 +47,6 @@ const ProfileToEdit = ( { user , deactivateView, updatePerfil } ) => {
 
         updateUser(formData)
             .then( updatedUser =>  {
-                console.log(updatedUser)
                 updatePerfil(updatedUser)
             })
             .catch(err => console.log(err))

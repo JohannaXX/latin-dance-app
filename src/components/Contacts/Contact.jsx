@@ -27,16 +27,17 @@ const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnActi
                     </p>
                     <p>{ bio }</p>
                 </div>
+                
                 { btnAction &&
                     <div className="col-md-2 col-sm-2 text-center">
                         <form onSubmit={ btnAction }>
-                            <button type="submit" className="btn btn-primary m-auto">{ btnText }</button>
+                            <button type="submit" className="btn btn-sm btn-secondary m-auto">{ btnText }</button>
                         </form>
-                        { btnText === 'Accept' ? (
+                        {( btnText === 'Accept' ) &&
                             <form onSubmit={ denyRequest }>
-                                <button type="submit" className="btn btn-primary mx-auto mt-3 ">Deny</button>
+                                <button type="submit" className="btn btn-sm btn-secondary mx-auto mt-3 ">Deny</button>
                             </form>
-                        ) : null}
+                        }
                     </div>
                 }
             </div>

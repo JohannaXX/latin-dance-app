@@ -18,7 +18,6 @@ const Profile = (props) => {
     useEffect(() => {
         getUser(props.match.params.id)
             .then( u => {
-                console.log(u)
                 if ( u.photos.length >= 4 ){
                     const photo = u.photos;
                     setGallery([photo[0], photo[1], photo[2], photo[3]])
@@ -45,6 +44,7 @@ const Profile = (props) => {
     }
 
     const handleUpdatedPerfil = (u) => {
+        console.log(u)
         setUser( prev => {
             return {
                 ...prev,
@@ -52,7 +52,8 @@ const Profile = (props) => {
                 bio: u.bio,
                 city: u.city,
                 country: u.country,
-                name: u.name
+                name: u.name,
+                style: [...u.style]
             }
         })
         setShowEditProfile(false)

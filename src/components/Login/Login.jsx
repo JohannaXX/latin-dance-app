@@ -106,7 +106,11 @@ const Login = (props) => {
                                 <div className="row d-flex justify-content-center">
                                     <div className="col-9 col-sm-10 py-2 mb-3 rounded">
 
-                                    {loginError && <div className="alert alert-danger">{loginError}</div>}
+                                    { loginError && 
+                                        <div className="alert alert-danger">
+                                            {loginError}
+                                        </div>
+                                    }
 
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
@@ -178,7 +182,9 @@ const Login = (props) => {
                                                     <i className="fa fa-slack"></i> Log in with Slack
                                                 </a>
                                             </div>
-                                            <p className="mt-3">You don't have an account? <a href="/signup">register here</a> </p>
+                                            <p className="mt-3">
+                                                You don't have an account? <a href="/signup">register here</a> 
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

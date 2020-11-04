@@ -50,3 +50,4 @@ export const getNetwork = () => http.get('/network');
 export const updateMatch = (id, status) => http.patch(`/match/${id}/update`, { status });
 
 export const requestCreateMatch = (id) => http.post('/match', { id });
+

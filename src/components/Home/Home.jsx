@@ -87,11 +87,24 @@ const Home = () => {
                     <div className="panel m-0">
                         <div className="panel-body p-3">
 
-                            <textarea className="form-control" onChange={ handleWritePost } value={ postToPublish } rows="2" placeholder="What are you thinking?"></textarea>
+                            <textarea 
+                                className="form-control" 
+                                onChange={ handleWritePost } 
+                                value={ postToPublish } 
+                                rows="2" 
+                                placeholder="What are you thinking?">
+                            </textarea>
                             <div className=" clearfix">
-                                <input name="file" id="file" type="file"></input>
-                                <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishPost } type="button">
-                                    <i className="fa fa-pencil fa-fw" /* className="btn-icon fa fa-upload"  */></i> Share
+                                <input 
+                                    name="file" 
+                                    id="file" 
+                                    type="file">
+                                </input>
+                                <button 
+                                    className="btn btn-sm btn-primary pull-right" 
+                                    onClick={ handlePublishPost } 
+                                    type="button">
+                                    <i className="fa fa-pencil fa-fw" ></i> Share
                                 </button>
                             </div>
                      
@@ -105,9 +118,18 @@ const Home = () => {
                             </div>
                             <div className="srch_bar">
                                 <div className="stylish-input-group">
-                                    <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search..."></input>
+                                    <input 
+                                        className="search-bar"  
+                                        onChange={ handleSearch } 
+                                        value={ search } 
+                                        type="text" 
+                                        placeholder="Search...">
+                                    </input>
                                     <span className="input-group-addon">
-                                    <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                    <button 
+                                        type="button"> 
+                                        <i className="fa fa-search" aria-hidden="true"></i> 
+                                    </button>
                                     </span> 
                                 </div>
                             </div>

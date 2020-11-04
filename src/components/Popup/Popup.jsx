@@ -1,21 +1,23 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import './Popup.css';
 
-const Popup = ({ question , provideAnswer}) => {
+const Popup = ({ open, children, closePop , handleYesAnswer }) => {
+    if (!open) return null
 
-
-    return (
+    return ReactDom.createPortal(
         <div className="popup-container">
 
-            <div className="popup-window text-center border border-secondary bg-light b-3 rounded">
-                <p>{ question }</p>
+            <div className="popup-window text-center border border-secondary bg-light rounded">
+                <p>{ children }</p>
                 <div className="d-flex justify-content-center">
-                    <button className="btn btn-sm btn-secondary m-2" onClick={ provideAnswer } >Yes</button>
-                    <button className="btn btn-sm btn-secondary m-2" onClick={ provideAnswer }>No</button>
+                    <button className="btn btn-sm btn-secondary px-2 m-2" onClick={ handleYesAnswer } >Yes</button>
+                    <button className="btn btn-sm btn-secondary px-2 m-2" onClick={ closePop }>No</button>
                 </div>
             </div>
 
-        </div>
+        </div>,
+        document.getElementById('portal')
     )
 
 }

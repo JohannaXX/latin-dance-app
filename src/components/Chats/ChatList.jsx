@@ -18,12 +18,14 @@ const ChatList = () => {
     useEffect( () => {
         getChatList()
             .then( res => {
+                
                 const filterContactIdsAndChats = res.chats.reduce( (acc, cur) => {
                     acc[cur.members[0].id] = cur.id
                     return acc
                 }, {}) 
+                //order usersContacts
+
                 setContactIdsWithActiveChat(filterContactIdsAndChats)
-               /*  console.log(contactIdsWithActiveChat) */
                 setContacts(res.chats);
                 setShowContacts(true);
             })
@@ -80,10 +82,10 @@ const ChatList = () => {
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={handleSearch} value={search} onClick={clickedInsideOfSearch} type="text" className="search-bar"  placeholder="Search"></input>
+                                <input onChange={ handleSearch } value={ search } onClick={ clickedInsideOfSearch } type="text" className="search-bar"  placeholder="Search"></input>
                                 <span className="input-group-addon">
                                     { showUserContacts ? 
-                                        <button type="button" onClick={clickedOutsideOfSearch}>
+                                        <button type="button" onClick={ clickedOutsideOfSearch }>
                                             <i className="fa fa-close" aria-hidden="true"></i> 
                                         </button>
                                         : 
@@ -96,7 +98,7 @@ const ChatList = () => {
 
                     <div className="list list-row block">
                         { showUserContacts ? 
-                            (usersContacts.map( c => {
+                            ( usersContacts.map( c => {
                                 
                                 if (Object.keys(contactIdsWithActiveChat).includes(c.user.id)) {
                                     return (

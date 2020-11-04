@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import { createChat } from '../../services/ChatClient';
+import { updateChat } from '../../services/ChatClient';
 
 const ChatListComponent = ({ contact, msg, chatId}) => {
     const [ chat, setChat ] = useState(null);
@@ -40,14 +41,14 @@ const ChatListComponent = ({ contact, msg, chatId}) => {
                     </form>
                 }
        
-                { !msg ? null : (
+                { msg && 
                     <div className="row item-except text-muted text-sm">
                         <div className="col-8 item-except text-muted text-sm ">
                             {msg.message.length <= 20 ? msg.message : `${msg.message.substring(0,30)}...`}
                         </div>
                         <div className="col-4 text-right flex item-except text-muted text-sm text-nowrap">{msg.createdAt.split("T")[0]}</div>
                     </div>
-                ) }
+                }
                 
             </div>
         </div> 

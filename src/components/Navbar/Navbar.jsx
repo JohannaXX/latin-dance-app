@@ -1,13 +1,9 @@
-import React, { useState, useEffect, cleanup } from 'react';
+import React from 'react';
+import { useAuthContext } from '../../contexts/AuthContext';
 
-const Navbar = () => {
-    const [ me, setMe ] = useState({});
-
-    useEffect(() => {
-        setMe(JSON.parse(localStorage.getItem('user')));
-
-        return () => cleanup
-    }, [])
+const Navbar = ( ) => {
+    const authContext = useAuthContext();
+    const { user } = authContext;
 
     return (
         <div className="navbar-container">
@@ -16,38 +12,32 @@ const Navbar = () => {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/signup">Signup</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/login">Login</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/logout">Logout</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/user/:id">Profile</a>
-                        </li>
-                        { me && 
-                            <li className="nav-item">
-                                <a className="nav-link" href={"/user/" + me.id}>My profile</a>
-                            </li>
+                        
+                        { user && 
+                            <div className="d-flex flex-row">
+                                <div className="d-flex flex-row">
+                                    <li className="nav-item">
+                                        <a className="nav-link" href={"/user/" + user.id}>My profile</a>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/contacts">Contacts</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/network">Network</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/chats">Chats</a>
+                                    </li>
+                                </div>
+
+                                <div>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/logout">Logout</a>
+                                    </li>
+                                </div>
+                            </div>
                         }
-                        <li className="nav-item">
-                            <a className="nav-link" href="/contacts">Contacts</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/network">Network</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/chats">ChatList</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/chat/:id">Chat</a>
-                        </li>
                         
                     </ul>
                 </div>

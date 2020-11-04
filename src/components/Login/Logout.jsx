@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { logout } from '../../services/UserClient';
+import Popup from '../Popup/Popup';
 
 const Logout = () => {
-    const [ userLoggedOut, setUserLoggedOut ] = useState(false)
+    const [ userLoggedOut, setUserLoggedOut ] = useState(false);
+    const [ openPopup, setOpenPopup ] = useState(true);
 
     const handleLogout = () => {
-
         logout()
             .then(() => {
                 localStorage.setItem('user', null)
@@ -15,8 +16,8 @@ const Logout = () => {
             .catch(error => console.log(error))
     }
 
-    const handelBack = () => {
-        return window.history.back()
+    const handleClosePopup = () => {
+        setOpenPopup(false);
     }
 
     if ( userLoggedOut ) {
@@ -25,21 +26,14 @@ const Logout = () => {
 
     return (
         <div className="logout-container text-center">
-            <h3 className="m-3">Are you sure you want to log out?</h3>
-            <div className="d-flex justify-content-center">
-                <button 
-                    className="btn btn-sm btn-secondary m-2 px-4" 
-                    onClick={ handleLogout }
-                    >
-                    Yes
-                </button>
-                <button 
-                    className="btn btn-sm btn-secondary m-2 px-4"
-                    onClick={ handelBack }
-                    >
-                    No
-                </button>
-            </div>
+            <h4 className="m-3">See you soon...</h4>
+            <Popup 
+                open = { openPopup } 
+                closePop = { handleClosePopup }
+                handleYesAnswer = { handleLogout }
+                > 
+                Are you sure you want to log out?
+            </Popup>
         </div>
     )
 }

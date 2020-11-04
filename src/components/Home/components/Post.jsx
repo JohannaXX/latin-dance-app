@@ -5,6 +5,7 @@ import { deletePost } from '../../../services/PostClient';
 import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import Comment from './Comment';
+import Popup from '../../Popup/Popup';
 import './Post.css';
 
 const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , requestReload}) => {
@@ -16,6 +17,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
     const [ showEditPost, setShowEditPost ] = useState(false);
     const [ editPost, setEditPost ] = useState(body);
     const [ reload, setReload ] = useState(false);
+    const [ openPopup, setOpenPopup ] = useState(false);
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
@@ -76,6 +78,14 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
         setReload(!reload)
     }
 
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
+    }
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+    }
+
     if ( error ) {
         return <div>{ error }</div>
     }
@@ -118,17 +128,24 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                         <i className="fa fa-comment-o mr-1"></i>{ comments.length } Comments
                     </button>
 
-                    {user.id !== myId ? null : (
+                    {( user.id === myId ) &&
                         <div>
-                            <button className="mx-2" onClick={ handelCancelPost }>Cancel post</button>
+                            <button className="mx-2" onClick={ handleOpenPopup }>Cancel post</button>
+                            <Popup 
+                                open = { openPopup } 
+                                closePop = { handleClosePopup }
+                                handleYesAnswer = { handelCancelPost }
+                                > 
+                                Are you sure you want to cancel your post?
+                            </Popup>
                             <button className="mx-2" onClick={ clickedEditPost }>Edit post</button>
                         </div>
-                    )}
+                    }
                 </div>
 
                 <hr />
 
-                { !showComments ? null : (
+                { showComments &&
                     <div>
                         {allComments.map(c => {
                             return (
@@ -150,7 +167,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                         </div>
                         
                     </div>
-                )}
+                }
 
             </div>
         </div>

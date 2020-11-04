@@ -5,7 +5,7 @@ const AuthContext = createContext()
 export const useAuthContext = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const login = useCallback(user => {
     localStorage.setItem('user', JSON.stringify(user))

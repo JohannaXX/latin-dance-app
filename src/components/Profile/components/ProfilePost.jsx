@@ -5,6 +5,7 @@ import { deletePost } from '../../../services/PostClient';
 import { createComment } from '../../../services/PostClient';
 import { handleLikes } from '../../../services/PostClient';
 import ProfilePostComments from './ProfilePostComments';
+import Popup from '../../Popup/Popup';
 
 const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, requestReload }) => {
     const [ text, setText ] = useState( body )
@@ -14,6 +15,7 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
     const [ showEditPost, setShowEditPost ] = useState(false);
     const [ editPost, setEditPost ] = useState(body);
     const [ commentToPublish, setCommentToPublish] = useState('');
+    const [ openPopup, setOpenPopup ] = useState(false);
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
     
@@ -64,6 +66,14 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
 
     }
 
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
+    }
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+    }
+
     if ( error ) {
         return <div>{ error }</div>
     }
@@ -95,7 +105,7 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
                 </p>
             }
 
-            { photo ? 
+            { photo && 
                 <div className="d-flex justify-content-center">
                     <img 
                         className="boder border-white shadow rounded m-2"
@@ -104,34 +114,40 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
                         alt=".."
                     />
                 </div>
-                :
-                null
             }
 
             <ul className="list-inline small text-muted mt-3 mb-0">
 
                 <li 
-                    className="list-inline-item" 
+                    className="btn btn-sm text-muted list-inline-item" 
                     onClick={ handleLike } 
                     >
-                    <i className="fa fa-heart-o mr-2"></i>{ allLikes } <u>Likes</u> &nbsp;| 
+                    <i className="fa fa-heart-o"></i>{ allLikes } <u>Likes</u> 
                 </li>
                 <li 
-                    className="list-inline-item"
-                    onClick={toggleShowComments}>
-                    <i className="fa fa-comment-o mr-2"></i>{ comments.length} <u>Comments</u>
+                    className="btn btn-sm text-muted list-inline-item"
+                    onClick={ toggleShowComments }>
+                    <i className="fa fa-comment-o"></i>{ comments.length} <u>Comments</u>
                 </li>
 
                 { user.id === myId ? 
                     <div className="d-inline mx-1">
                         <li 
-                            className="list-inline-item mx-2" 
-                            onClick={ handelCancelPost }
+                            className="btn btn-sm text-muted list-inline-item" 
+                            //onClick={ handelCancelPost }
+                            onClick={ handleOpenPopup }
                             >
                             <u>Cancel post</u>
                         </li>
+                        <Popup 
+                            open = { openPopup } 
+                            closePop = { handleClosePopup }
+                            handleYesAnswer = { handelCancelPost }
+                            > 
+                            Are you sure you want to cancel the Post?
+                        </Popup>
                         <li 
-                            className="list-inline-item mx-2" 
+                            className="btn btn-sm text-muted list-inline-item" 
                             onClick={ clickedEditPost }
                             >
                             <u>Edit post</u>
