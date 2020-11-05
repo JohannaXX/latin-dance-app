@@ -75,7 +75,7 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
     }
 
     if ( error ) {
-        return <div>{ error }</div>
+        return error
     }
 
     return (
@@ -106,9 +106,9 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
             }
 
             { photo && 
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center rounded m-2">
                     <img 
-                        className="boder border-white shadow rounded m-2"
+                        className="w-100"
                         style={{maxWidth: '350px', maxHeight: '350px'}}
                         src={photo}
                         alt=".."
@@ -134,7 +134,6 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
                     <div className="d-inline mx-1">
                         <li 
                             className="btn btn-sm text-muted list-inline-item" 
-                            //onClick={ handelCancelPost }
                             onClick={ handleOpenPopup }
                             >
                             <u>Cancel post</u>

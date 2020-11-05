@@ -89,9 +89,9 @@ const Profile = (props) => {
 
     const toggleAllPhotos = () => {
         if ( gallery.length <= 4 ) {
-            setGallery(user.gallery)
+            setGallery(user.photos)
         } else {
-            const photo = user.gallery;
+            const photo = user.photos;
             setGallery([photo[0], photo[1], photo[2], photo[3]])
         }
     }
@@ -118,9 +118,9 @@ const Profile = (props) => {
     } 
 
     return (
-        <div className="profile-container">
+        <div className="profile-container w-100">
 
-            <div className="row py-2 px-4">
+            <div className="row">
                 <div className="col-sm-8 mx-auto">
                     <div className="bg-white shadow rounded overflow-hidden">
 
@@ -152,7 +152,9 @@ const Profile = (props) => {
                                                         className="mt-1 mr-3 d-inline">
                                                         { user.name }
                                                     </h4>
-                                                    <p className="small"> <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }</p>
+                                                    <p className="small"> 
+                                                        <i className="fa fa-map-marker mr-2"></i>{ user.city } | { user.country }
+                                                    </p>
                                                 </div>
 
                                                 { user.id === myId ? 
@@ -187,7 +189,7 @@ const Profile = (props) => {
                                         { user.style.map( dance => {
                                             return  (
                                                 <span 
-                                                    className="tag bg-secondary rounded text-white mr-1 p-2" 
+                                                    className="tag bg-secondary rounded text-white mr-1 p-2 no-wrap" 
                                                     key={dance}>
                                                     { dance }
                                                 </span>
@@ -231,7 +233,7 @@ const Profile = (props) => {
                                     <div className="py-2 px-4 mb-3 bg-light rounded shadow-sm">
 
                                         <textarea 
-                                            className="form-control" 
+                                            className="form-control mb-1" 
                                             onChange={ handleWritePost } 
                                             value={ postToPublish } 
                                             rows="2" 

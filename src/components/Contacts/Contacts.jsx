@@ -57,17 +57,25 @@ const Contacts = () => {
     return (
         <div className="contacts-container">
             <div className="row">
-                <div className="col-md-8 m-auto">
+                <div className="col-md-8 shadow m-auto px-2 rounded">
 
-                    <div className="headind_srch">
+                    <div className="headind_srch bg-secondary rounded">
                         <div className="recent_heading">
-                            <h4>Contacts</h4>
+                            <h4 className="text-light">Contacts</h4>
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search..."></input>
-                                <span className="input-group-addon mr-0">
-                                    <button className="" type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                <input 
+                                    className="search-bar text-light"  
+                                    onChange={handleSearch} 
+                                    value={search} 
+                                    type="text" 
+                                    placeholder="Search..."
+                                ></input>
+                                <span className="input-group-addon text-light mr-0">
+                                    <button> 
+                                        <i className="fa fa-search text-light" aria-hidden="true"></i> 
+                                    </button>
                                 </span> 
                             </div>
                         </div>

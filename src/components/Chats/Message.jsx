@@ -65,7 +65,7 @@ const Message = ({id, type, avatar, text, date, reload}) => {
                             </div>
                         </div> 
                         :
-                        <p className={text === '...(message cancelled)'? 'bg-light text-mute': null}>{ text }</p>
+                        <p className={text === '...(message cancelled)'? 'bg-light text-secondary font-italic': null}>{ text }</p>
                     }
                     
                     { !showEditCancelBtns ? null : 
@@ -81,7 +81,7 @@ const Message = ({id, type, avatar, text, date, reload}) => {
     }
 
     return (
-        <div className="incoming_msg">
+        <div className="incoming_msg mt-4">
 
             <div className="incoming_msg_img w-48"> 
                 <img className="avatar" src={ avatar } alt="..."/> 

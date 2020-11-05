@@ -23,7 +23,6 @@ const ChatList = () => {
                     acc[cur.members[0].id] = cur.id
                     return acc
                 }, {}) 
-                //order usersContacts
 
                 setContactIdsWithActiveChat(filterContactIdsAndChats)
                 setContacts(res.chats);
@@ -33,6 +32,8 @@ const ChatList = () => {
 
         getContacts()
             .then( res => {
+                 //order usersContacts
+
                 setData(res)
                 setUsersContacts(res)
             })
@@ -74,22 +75,29 @@ const ChatList = () => {
     return (
         <div className="chatlist-container">
             <div className="row">
-                <div className="col-sm-8 m-auto">
+                <div className="col-sm-8 m-auto px-2 rounded">
 
-                    <div className="headind_srch">
+                    <div className="headind_srch bg-secondary">
                         <div className="recent_heading">
-                            <h4>Chats</h4>
+                            <h4 className="text-light">Chats</h4>
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={ handleSearch } value={ search } onClick={ clickedInsideOfSearch } type="text" className="search-bar"  placeholder="Search"></input>
+                                <input 
+                                    className="search-bar"  
+                                    onChange={ handleSearch } 
+                                    onClick={ clickedInsideOfSearch } 
+                                    value={ search } 
+                                    type="text" 
+                                    placeholder="Search"
+                                ></input>
                                 <span className="input-group-addon">
                                     { showUserContacts ? 
-                                        <button type="button" onClick={ clickedOutsideOfSearch }>
+                                        <button onClick={ clickedOutsideOfSearch }>
                                             <i className="fa fa-close" aria-hidden="true"></i> 
                                         </button>
                                         : 
-                                        <i className="fa fa-search" aria-hidden="true"></i> 
+                                        <i className="fa fa-search text-light" aria-hidden="true"></i> 
                                     }
                                 </span> 
                             </div>

@@ -18,7 +18,7 @@ import './App.css';
 
 function App() {
     return (
-        <div className="app-container">
+        <div className="app-container m-0">
             <Navbar />
 
             <Switch>

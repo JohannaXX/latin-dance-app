@@ -63,17 +63,25 @@ const Network = () => {
     return (
         <div className="network-container">
             <div className="row">
-                <div className="col-md-8 m-auto">
+                <div className="col-md-8 m-auto px-2 rounded">
                     
-                    <div className="headind_srch">
-                        <div className="recent_heading">
-                            <h4>Network</h4>
+                    <div className="headind_srch bg-secondary rounded">
+                        <div className="recent_heading ">
+                            <h4 className="text-light" >Network</h4>
                         </div>
                         <div className="srch_bar">
                             <div className="stylish-input-group">
-                                <input onChange={handleSearch} value={search} type="text" className="search-bar"  placeholder="Search..."></input>
+                                <input 
+                                    className="search-bar text-light"  
+                                    onChange={handleSearch} 
+                                    value={search} 
+                                    type="text" 
+                                    placeholder="Search..."
+                                ></input>
                                 <span className="input-group-addon">
-                                    <button type="button"> <i className="fa fa-search" aria-hidden="true"></i> </button>
+                                    <button type="button"> 
+                                        <i className="fa fa-search text-light" aria-hidden="true"></i> 
+                                    </button>
                                 </span> 
                             </div>
                         </div>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { windowDimensions } from '../../helpers/window.size.helper';
 import './Contact.css';
 
 const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnAction, denyRequest }) => {
-
+    const { windowWidth } = windowDimensions();
+    console.log( windowWidth )
     return (
         <div className="user-card align-center">
             <div className="row">
@@ -17,26 +19,32 @@ const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnActi
                     </div>
                 </div>
                 <div className="col-md-7 col-sm-7">
-                    <a href={"/user/" + id} className="profile-link">
-                        <h5>{ name }</h5>
+                    <a href={"/user/" + id} className={`profile-link ${(windowWidth <= 600) ? "text-center" : ""}`}>
+                        <h5 className="text-secondary">{ name }</h5>
                     </a>
-                    <p className="text-muted">
+                    <p className={`text-muted ${(windowWidth <= 600) ? "text-center" : ""}`}>
                         { style.map( s => {
                             return <span className="mr-2">{ s }</span>
                         })}
                     </p>
                     <p>{ bio }</p>
                 </div>
-                
+
                 { btnAction &&
                     <div className="col-md-2 col-sm-2 text-center">
-                        <form onSubmit={ btnAction }>
-                            <button type="submit" className="btn btn-sm btn-secondary m-auto">{ btnText }</button>
-                        </form>
+                        <button 
+                            className="btn btn-sm btn-secondary mx-2 px-3 mb-2" 
+                            onClick={ btnAction }
+                            >
+                            { btnText }
+                        </button>
                         {( btnText === 'Accept' ) &&
-                            <form onSubmit={ denyRequest }>
-                                <button type="submit" className="btn btn-sm btn-secondary mx-auto mt-3 ">Deny</button>
-                            </form>
+                            <button 
+                                className="btn btn-sm btn-secondary mx-2 px-3 mb-2"
+                                onClick={ denyRequest } 
+                                >
+                                Deny
+                            </button>
                         }
                     </div>
                 }

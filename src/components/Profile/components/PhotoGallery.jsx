@@ -1,7 +1,7 @@
 import React from 'react';
 
-const PhotoGallery = ({ images }) => {
-
+const PhotoGallery = ({images}) => {
+    console.log(images);
     return (
         <div className="row">
             { images.map( (img, ind) => {
