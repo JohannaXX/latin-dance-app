@@ -30,7 +30,7 @@ function App() {
                 <AuthenticatedRoute exact path="/contacts" component={ Contacts } />
                 <AuthenticatedRoute exact path="/user/:id" component={ Profile } />
                 
-                <NotAuthenticatedRoute exact path="/setuser/:id" 
+                <NotAuthenticatedRoute exact path="/setuser/cb" 
                     render={(props) => <SetUserFromSocialLogin {...props} /> }
                 />
                 <NotAuthenticatedRoute exact path="/login" 

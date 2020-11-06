@@ -28,6 +28,8 @@ export const activateUser = (token) => http.get(`/activation/${token}`);
 
 export const login = ({ email, password }) => http.post('/login', { email, password });
 
+export const loginWithSlack = ({ code }) => http.post('/auth/slack', { params: { code }});
+
 export const loginWithGoogle = () => http.get('/auth/google');
 
 /* export const loginWithFacebook = (body) => http.post('/facebook/login', body); */

@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { Redirect } from 'react-router-dom';
-import { getUser } from '../../services/UserClient';
+import { queryParams } from '../helpers/helpers';
+import { loginWithSlack } from '../../services/UserClient';
 
 
 const SetUserFromSocialLogin = (props) => {
-    const [ userSet, setUserSet ] = useState(false);
-    const id = props.match.params.id;
-    const authContext = useAuthContext();
+    const { login } = useAuthContext()
 
-    getUser(id)
-        .then(u => {
-            authContext.login(u);
-            setUserSet(true);
-    })
+    useEffect(() => {
+        const { code } = queryParams
 
-    if ( userSet ) {
-        return <Redirect to="/" />
-    }
-    return <div>One moment, you will be forwarded soon...</div>
+        loginWithSlack(code)
+            .then(user => {
+                login(user)
+            })
+    }, [login])
+
+    return null
 }
 
 export default SetUserFromSocialLogin;
