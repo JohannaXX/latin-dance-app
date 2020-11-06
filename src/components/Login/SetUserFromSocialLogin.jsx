@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { queryParams } from '../helpers/helpers';
 import { loginWithSlack } from '../../services/UserClient';
