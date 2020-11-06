@@ -23,7 +23,7 @@ function App() {
             <Navbar />
 
             <Switch>
-                {/* <AuthenticatedRoute exact path="/chat/:id" component={ Chat } />
+                <AuthenticatedRoute exact path="/chat/:id" component={ Chat } />
                 <AuthenticatedRoute exact path="/chats" component={ ChatList } />
                 <AuthenticatedRoute exact path="/logout" component={ Logout } />
                 <AuthenticatedRoute exact path="/network" component={ Network } />
@@ -37,9 +37,8 @@ function App() {
                     render={(props) => <Login {...props} message={''} /> }
                 />
                 <NotAuthenticatedRoute exact path="/activation/:token" component={ Activation } />
-                <NotAuthenticatedRoute exact path="/signup" component={ Signup } /> */}
-                <NotAuthenticatedRoute exact path="/" component={Test} />
-               {/*  <AuthenticatedRoute exact path="/" component={Home} /> */}
+                <NotAuthenticatedRoute exact path="/signup" component={ Signup } />
+                <AuthenticatedRoute exact path="/" component={Home} />
             </Switch>
 
         </div>
