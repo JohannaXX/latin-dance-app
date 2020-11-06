@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAuthContext } from '../contexts/AuthContext'
+import { useAuthContext } from '../../contexts/AuthContext'
 import { queryParams } from '../helpers/helpers'
 import { socialLogin } from '../services/ApiClient'
 
