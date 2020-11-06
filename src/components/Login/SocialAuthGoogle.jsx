@@ -3,7 +3,7 @@ import { useAuthContext } from '../../contexts/AuthContext'
 import { queryParamsGoogle } from '../../helpers/helper'
 import { loginWithGoogle } from '../../services/UserClient'
 
-const SocialAuthCallback = () => {
+const SocialAuthGoogle = () => {
   const { login } = useAuthContext()
 
   useEffect(() => {
@@ -18,4 +18,4 @@ const SocialAuthCallback = () => {
   return null
 }
 
-export default SocialAuthCallback;
+export default SocialAuthGoogle;
