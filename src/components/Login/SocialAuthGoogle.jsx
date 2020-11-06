@@ -1,0 +1,21 @@
+import { useEffect } from 'react'
+import { useAuthContext } from '../../contexts/AuthContext'
+import { queryParamsGoogle } from '../../helpers/helper'
+import { loginWithGoogle } from '../../services/UserClient'
+
+const SocialAuthCallback = () => {
+  const { login } = useAuthContext()
+
+  useEffect(() => {
+    const { code } = queryParamsGoogle()
+
+    loginWithGoogle(code)
+      .then(user => {
+        login(user)
+      })
+  }, [login])
+
+  return null
+}
+
+export default SocialAuthCallback;

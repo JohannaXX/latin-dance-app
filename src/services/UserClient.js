@@ -30,7 +30,7 @@ export const login = ({ email, password }) => http.post('/login', { email, pass
 
 export const socialLogin = ( code ) => http.get('/auth/slack', { params: { code }});
 
-export const loginWithGoogle = () => http.get('/auth/google');
+export const loginWithGoogle = ( code ) => http.get('/auth/google', { params: code });
 
 /* export const loginWithFacebook = (body) => http.post('/facebook/login', body); */
 
