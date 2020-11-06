@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import Activation from './components/Signup/Activation';
-import SetUserFromSocialLogin from './components/Login/SetUserFromSocialLogin';
+import SocialAuthCallback from './components/Login/SocialAuthCallback';
 import Login from './components/Login/Login';
 import Logout from './components/Login/Logout';
 import Profile from './components/Profile/Profile';
@@ -13,7 +13,6 @@ import Contacts from './components/Contacts/Contacts';
 import Network from './components/Contacts/Network';
 import ChatList from './components/Chats/ChatList';
 import Chat from './components/Chats/Chat';
-import Test from './components/Test';
 
 import './App.css';
 
@@ -30,12 +29,9 @@ function App() {
                 <AuthenticatedRoute exact path="/contacts" component={ Contacts } />
                 <AuthenticatedRoute exact path="/user/:id" component={ Profile } />
                 
-                <NotAuthenticatedRoute exact path="/setuser/cb" 
-                    render={(props) => <SetUserFromSocialLogin {...props} /> }
-                />
-                <NotAuthenticatedRoute exact path="/login" 
-                    render={(props) => <Login {...props} message={''} /> }
-                />
+                <NotAuthenticatedRoute exact path="/social-auth/cb" component={ SocialAuthCallback }/>
+
+                <NotAuthenticatedRoute exact path="/login" component={ Login } />
                 <NotAuthenticatedRoute exact path="/activation/:token" component={ Activation } />
                 <NotAuthenticatedRoute exact path="/signup" component={ Signup } />
                 <AuthenticatedRoute exact path="/" component={Home} />
