@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 /* import FacebookLogin from 'react-facebook-login'; */
 import { useAuthContext } from '../../contexts/AuthContext';
 import { login } from '../../services/UserClient';
+import { loginWithGoogle } from '../../services/UserClient';
 /* import { loginWithFacebook} from '../../services/UserClient'; */
 
 
@@ -164,6 +165,13 @@ const Login = (props) => {
                                                     >
                                                     <i className="fa fa-google"></i> Log in with Google
                                                 </a>  
+
+                                                <button
+                                                    onClick={ loginWithGoogle }
+                                                    >
+                                                    Log in with Google
+                                                </button>
+
                                                 {/* <div className="d-inline border border-secondary rounded m-2 px-2 py-2 text-primary">
                                                     <i className="fa fa-facebook"></i>
                                                     <FacebookLogin
