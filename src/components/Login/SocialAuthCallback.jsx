@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { queryParams } from '../helpers/helpers'
-import { socialLogin } from '../services/ApiClient'
+import { queryParams } from '../../helpers/helpers'
+import { socialLogin } from '../../services/UserClient'
 
 const SocialAuthCallback = () => {
   const { login } = useAuthContext()
