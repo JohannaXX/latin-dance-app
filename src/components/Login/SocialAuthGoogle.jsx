@@ -4,18 +4,18 @@ import { queryParamsGoogle } from '../../helpers/helper'
 import { loginWithGoogle } from '../../services/UserClient'
 
 const SocialAuthGoogle = () => {
-  const { login } = useAuthContext()
+    const { login } = useAuthContext()
 
-  useEffect(() => {
-    const { code } = queryParamsGoogle()
+    useEffect(() => {
+        const { code } = queryParamsGoogle()
 
-    loginWithGoogle(code)
-      .then(user => {
-        login(user)
-      })
-  }, [login])
+        loginWithGoogle(code)
+            .then(user => {
+                login(user)
+            })
+    }, [login])
 
-  return null
+    return null
 }
 
 export default SocialAuthGoogle;

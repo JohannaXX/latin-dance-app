@@ -94,7 +94,7 @@ const Home = () => {
                                 rows="2" 
                                 placeholder="What are you thinking?">
                             </textarea>
-                            <div className=" clearfix">
+                            <div className=" clearfix mt-1">
                                 <input 
                                     name="file" 
                                     id="file" 

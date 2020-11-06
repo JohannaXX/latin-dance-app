@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Signup from './components/Signup/Signup';
 import Activation from './components/Signup/Activation';
 import SocialAuthCallback from './components/Login/SocialAuthCallback';
+import SocialAuthGoogle from './components/Login/SocialAuthGoogle';
 import Login from './components/Login/Login';
 import Logout from './components/Login/Logout';
 import Profile from './components/Profile/Profile';
@@ -30,6 +31,7 @@ function App() {
                 <AuthenticatedRoute exact path="/user/:id" component={ Profile } />
                 
                 <NotAuthenticatedRoute exact path="/social-auth/cb" component={ SocialAuthCallback }/>
+                <NotAuthenticatedRoute exact path="/social-google/cb" component={ SocialAuthGoogle }/>
 
                 <NotAuthenticatedRoute exact path="/login" component={ Login } />
                 <NotAuthenticatedRoute exact path="/activation/:token" component={ Activation } />

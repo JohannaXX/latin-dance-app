@@ -1,10 +1,10 @@
-export const danceStyles = [ 
-    "salsa cubana", 
-    "salsa en linea", 
-    "bachata", 
-    "kizomba",
-    "tango",
-    "mambo",
-    "merengue",
-    "rumba"
-]
+export const danceStyles = [
+    "Salsa cubana", 
+    "Salsa en línea", 
+    "Bachata", 
+    "Kizomba", 
+    "Reggaeton", 
+    "Cumbia", 
+    "Merengue", 
+    "Cha-cha-chá"
+];

@@ -129,7 +129,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                     </button>
 
                     {( user.id === myId ) &&
-                        <div>
+                        <div className="d-inline mx-3">
                             <button className="mx-2" onClick={ handleOpenPopup }>Cancel post</button>
                             <Popup 
                                 open = { openPopup } 
