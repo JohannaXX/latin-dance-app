@@ -13,6 +13,7 @@ import Contacts from './components/Contacts/Contacts';
 import Network from './components/Contacts/Network';
 import ChatList from './components/Chats/ChatList';
 import Chat from './components/Chats/Chat';
+import Test from './components/Test';
 
 import './App.css';
 
@@ -37,7 +38,8 @@ function App() {
                 />
                 <NotAuthenticatedRoute exact path="/activation/:token" component={ Activation } />
                 <NotAuthenticatedRoute exact path="/signup" component={ Signup } />
-                <AuthenticatedRoute exact path="/" component={Home} />
+                {/* <AuthenticatedRoute exact path="/" component={Home} /> */}
+                <Test />
             </Switch>
 
         </div>
