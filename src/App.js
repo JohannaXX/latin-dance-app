@@ -38,8 +38,8 @@ function App() {
                 />
                 <NotAuthenticatedRoute exact path="/activation/:token" component={ Activation } />
                 <NotAuthenticatedRoute exact path="/signup" component={ Signup } />
-                {/* <AuthenticatedRoute exact path="/" component={Home} /> */}
                 <Test />
+               {/*  <AuthenticatedRoute exact path="/" component={Home} /> */}
             </Switch>
 
         </div>
