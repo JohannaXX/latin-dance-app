@@ -177,7 +177,7 @@ const Login = (props) => {
                                                 </div>    */}
                                                 <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
-                                                    href="https://git.heroku.com/latin-dance-app.git/auth/slack"
+                                                    href="https://latin-dance-app-backend.herokuapp.com/auth/slack"
                                                     >
                                                     <i className="fa fa-slack"></i> Log in with Slack
                                                 </a>
