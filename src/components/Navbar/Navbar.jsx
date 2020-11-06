@@ -14,7 +14,7 @@ const Navbar = ( ) => {
             <nav className="navbar navbar-light bg-light" >
 
                 { !user && 
-                    <ul>
+                    <ul className="navbar-nav">
                         <li className="nav-item m-1">
                             <a className="navbar-brand" href="/">Latin Dance App</a>
                         </li>

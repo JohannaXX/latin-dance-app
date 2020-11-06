@@ -6,6 +6,10 @@
     z-index: 1;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .tiny-text {
     font-size: 10px;
 }
