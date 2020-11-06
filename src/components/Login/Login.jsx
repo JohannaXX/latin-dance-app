@@ -77,12 +77,12 @@ const Login = (props) => {
         })
     }
 
-    const handleLoginWithFacebook = (user) => {
+    /* const handleLoginWithFacebook = (user) => {
         loginWithFacebook(user)
             .then( u => {
                 authContext.login(u)
             })
-    }
+    } */
 
 
     const isError = Object.values(error).some(err => err);
@@ -160,24 +160,24 @@ const Login = (props) => {
                                             <div id="social-login-btns">
                                                 <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
-                                                    href="http://localhost:3000/auth/google"
+                                                    href="https://latin-dance-app-backend.herokuapp.com/auth/google"
                                                     >
                                                     <i className="fa fa-google"></i> Log in with Google
                                                 </a>  
                                                 <div className="d-inline border border-secondary rounded m-2 px-2 py-2 text-primary">
                                                     <i className="fa fa-facebook"></i>
                                                     <FacebookLogin
-                                                        callback={ handleLoginWithFacebook }
+                                                        /* callback={ handleLoginWithFacebook } */
                                                         autoLoad={true}
                                                         cssClass="btnFacebook"
                                                         style={{borderRadius: '5px', backgroundColor: 'green !important'}}
-                                                        appId="3166714306789835"
+                                                        appId="1088597931155576"
                                                         fields="name,email,picture"
                                                     />                                          
                                                 </div>   
                                                 <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
-                                                    href="http://localhost:3000/auth/slack"
+                                                    href="https://latin-dance-app-backend.herokuapp.com/auth/slack"
                                                     >
                                                     <i className="fa fa-slack"></i> Log in with Slack
                                                 </a>
