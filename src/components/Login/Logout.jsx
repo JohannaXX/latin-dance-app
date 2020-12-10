@@ -6,7 +6,6 @@ import Popup from '../Popup/Popup';
 const Logout = () => {
     const [ userLoggedOut, setUserLoggedOut ] = useState(false);
     const [ openPopup, setOpenPopup ] = useState(true);
-    /* const [ returnToHome, setReturnToHome ] = useState(false); */
 
     const handleLogout = () => {
         logout()
@@ -19,11 +18,10 @@ const Logout = () => {
 
     const handleClosePopup = () => {
         setOpenPopup(false);
-        /* setReturnToHome(true); */
         window.history.back();
     }
 
-    if ( userLoggedOut || returnToHome ) {
+    if ( userLoggedOut ) {
         return <Redirect to="/login" />
     }
 
