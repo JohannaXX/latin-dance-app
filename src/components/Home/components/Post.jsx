@@ -59,7 +59,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                 setAllComments( prev => {
                     return [...prev, {
                         ...c,
-                        'user': user
+                        'user': c.user
                     }]
                 })
                 

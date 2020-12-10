@@ -6,7 +6,7 @@ import Popup from '../Popup/Popup';
 const Logout = () => {
     const [ userLoggedOut, setUserLoggedOut ] = useState(false);
     const [ openPopup, setOpenPopup ] = useState(true);
-    const [ returnToHome, setReturnToHome ] = useState(false);
+    /* const [ returnToHome, setReturnToHome ] = useState(false); */
 
     const handleLogout = () => {
         logout()
@@ -19,7 +19,8 @@ const Logout = () => {
 
     const handleClosePopup = () => {
         setOpenPopup(false);
-        setReturnToHome(true);
+        /* setReturnToHome(true); */
+        window.history.back();
     }
 
     if ( userLoggedOut || returnToHome ) {
@@ -28,7 +29,7 @@ const Logout = () => {
 
     return (
         <div className="logout-container text-center">
-            <h4 className="m-3">See you soon...</h4>
+            <h4 className="m-3"></h4>
             <Popup 
                 open = { openPopup } 
                 closePop = { handleClosePopup }
