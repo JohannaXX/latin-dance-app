@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Popup from '../../Popup/Popup';
 import { updateComment } from '../../../services/PostClient';
 import { deleteComment } from '../../../services/PostClient';
 import { timeUntilNow } from '../../../helpers/dates.helper';
