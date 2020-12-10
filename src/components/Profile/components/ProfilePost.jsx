@@ -157,8 +157,19 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
                 } 
             </ul>
 
-            { showComments ? 
+            { showComments &&
                 <div>
+                    { allComments.map( c => {
+                        return (
+                            <ProfilePostComments key = {c.id} 
+                                id = { c.id }
+                                comment = { c }
+                                text = { c.text }
+                                user = { c.user }
+                                createdAt = { c.createdAt }
+                            />
+                        )
+                    })}
                     <textarea 
                         className="form-control" 
                         onChange={ handleWriteComment } 
@@ -174,20 +185,7 @@ const ProfilePost = ({ id, user, body, photo, createdAt, comments, likes, reques
                             Post comment
                         </button>
                     </div>
-                    { allComments.map( c => {
-                        return (
-                            <ProfilePostComments key = {c.id} 
-                                id = { c.id }
-                                comment = { c }
-                                text = { c.text }
-                                user = { c.user }
-                                createdAt = { c.createdAt }
-                            />
-                        )
-                    })}
                 </div>
-                :
-                null
             }
             
         </div>

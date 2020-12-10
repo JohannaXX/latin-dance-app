@@ -6,6 +6,7 @@ import { timeUntilNow } from '../../../helpers/dates.helper';
 const ProfilePostComments = ({ id, user, text, createdAt }) => {
     const [ showCommentToEdit, setShowCommentToEdit ] = useState(false);
     const [ commentText, setCommentText] = useState(text);
+    const [ openPopup, setOpenPopup ] = useState(false);
     const [ error, setError ] = useState(null);
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
@@ -30,6 +31,14 @@ const ProfilePostComments = ({ id, user, text, createdAt }) => {
         deleteComment(id)
             .then(c => setCommentText(c.text))
             .catch(err => setError(err.response?.data?.message))
+    }
+
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
+    }
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
     }
 
     if ( error ) {
@@ -60,9 +69,16 @@ const ProfilePostComments = ({ id, user, text, createdAt }) => {
                     <div>
                         <button 
                             className="btn btn-sm border border-primary px-2 py-1 mr-2 mt-1" 
-                            onClick={ clickedCancelComment }>
+                            onClick={ handleOpenPopup }>
                             cancel
                         </button>
+                        <Popup 
+                            open = { openPopup } 
+                            closePop = { handleClosePopup }
+                            handleYesAnswer = { clickedCancelComment }
+                            > 
+                            Are you sure you want to cancel your comment?
+                        </Popup>
                         <button 
                             className="btn btn-sm border border-primary px-2 py-1 mr-2 mt-1" 
                             onClick={ clickedEditComment }>
