@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../../../contexts/AuthContext';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import { updatePost } from '../../../services/PostClient';
 import { deletePost } from '../../../services/PostClient';
@@ -19,6 +20,8 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
     const [ reload, setReload ] = useState(false);
     const [ openPopup, setOpenPopup ] = useState(false);
     const [ error, setError ] = useState(null);
+    const authContext = useAuthContext();
+    const me = authContext.user;
     const myId = JSON.parse(localStorage.getItem('user')).id;
 
     const toggleShowComments = () => {
@@ -59,7 +62,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                 setAllComments( prev => {
                     return [...prev, {
                         ...c,
-                        'user': c.user
+                        'user': me
                     }]
                 })
                 

@@ -29,6 +29,7 @@ const ProfilePostComments = ({ id, user, text, createdAt }) => {
     }
 
     const clickedCancelComment = () => {
+        setOpenPopup(false);
         deleteComment(id)
             .then(c => setCommentText(c.text))
             .catch(err => setError(err.response?.data?.message))
