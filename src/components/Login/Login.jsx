@@ -33,11 +33,11 @@ const Login = (props) => {
         event.preventDefault();
 
         try {
-        const user = await login(data)
+            const user = await login(data)
 
-        authContext.login(user)
+            authContext.login(user)
         } catch(err) {
-        setLoginError(err.response?.data?.message)
+            setLoginError(err.response?.data?.message)
         }
     };
 
@@ -74,6 +74,12 @@ const Login = (props) => {
             }
           }
         })
+    }
+
+    const handleLoginWithGoogle = () => {
+        loginWithGoogle()
+            .then( user => authContext.login(user))
+            .catch( err => console.log(err))
     }
 
 
@@ -150,12 +156,12 @@ const Login = (props) => {
                                         
                                         <div id="social-login-area" className="text-center mt-3">
                                             <div id="social-login-btns">
-                                                <a
+                                                <button
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
-                                                    href="https://latin-dance-app-backend.herokuapp.com/auth/google"
+                                                    onClick={ handleLoginWithGoogle }
                                                     >
                                                     <i className="fa fa-google"></i> Log in with Google
-                                                </a>  
+                                                </button>  
 
                                                 <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
