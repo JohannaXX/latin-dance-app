@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAuthContext } from '../../../contexts/AuthContext';
 import { timeUntilNow } from '../../../helpers/dates.helper';
 import { updatePost } from '../../../services/PostClient';
 import { deletePost } from '../../../services/PostClient';
@@ -20,9 +19,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
     const [ reload, setReload ] = useState(false);
     const [ openPopup, setOpenPopup ] = useState(false);
     const [ error, setError ] = useState(null);
-    const authContext = useAuthContext();
-    const me = authContext.user;
-    const myId = JSON.parse(localStorage.getItem('user')).id;
+    const me = JSON.parse(localStorage.getItem('user'));
 
     const toggleShowComments = () => {
         setShowComments(!showComments);
@@ -131,7 +128,7 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                         <i className="fa fa-comment-o mr-1"></i>{ comments.length } Comments
                     </button>
 
-                    {( user.id === myId ) &&
+                    {( user.id === me.id ) &&
                         <div className="d-inline mx-3">
                             <button className="mx-2" onClick={ handleOpenPopup }>Cancel post</button>
                             <Popup 
@@ -162,9 +159,17 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
                             )
                         })}
 
-                        <textarea className="form-control" onChange={ handleWriteComment } value={ commentToPublish } rows="4" placeholder="Comment post"></textarea>
+                        <textarea 
+                            className="form-control" 
+                            onChange={ handleWriteComment } 
+                            value={ commentToPublish } 
+                            rows="4" placeholder="Comment post">
+                        </textarea>
                         <div className=" clearfix">
-                            <button className="btn btn-sm btn-primary pull-right" onClick={ handlePublishComment } type="button">
+                            <button 
+                                className="btn btn-sm btn-primary pull-right" 
+                                onClick={ handlePublishComment } 
+                                type="button">
                                 <i className="fa fa-pencil fa-fw"></i> Post comment
                             </button>
                         </div>
