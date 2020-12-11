@@ -55,7 +55,6 @@ const Post = ({ id, user, body, photo, likes, comments, createdAt, updatedAt , r
     const handlePublishComment = () => {
         createComment(id, commentToPublish)
             .then( c => {
-                
                 setAllComments( prev => {
                     return [...prev, {
                         ...c,

@@ -8,7 +8,6 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const login = useCallback(user => {
-    console.log('login called')
     localStorage.setItem('user', JSON.stringify(user))
     setUser(user)
   }, [])

@@ -32,8 +32,6 @@ export const socialLogin = ( code ) => http.get('/auth/slack', { params: { code 
 
 export const loginWithGoogle = ( code ) => http.get('/auth/google', { params: code });
 
-/* export const loginWithFacebook = (body) => http.post('/facebook/login', body); */
-
 export const logout = () => http.post('/logout');
 
 export const getUser = (id) => http.get(`/user/${id}`);

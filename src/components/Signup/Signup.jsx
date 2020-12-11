@@ -57,9 +57,6 @@ const Signup = () => {
     const [ passwordMatching, setPasswordMatching] = useState(true);
     const [ signinError, setSigninError ] = useState(null);
 
-
-    console.log(state)
-
     const handleSubmitForm = (e) => {
         e.preventDefault();
         const avatarImg = document.querySelector("#profileImage");
@@ -74,7 +71,6 @@ const Signup = () => {
 
         createUser(formData)
             .then( user => {
-                console.log(user);
                 setSigninError('check your e-mail for account activation')
             })
             .catch(err => setSigninError(err))
@@ -164,7 +160,7 @@ const Signup = () => {
 
 
     const checkPasswordMatching = (e) => {
-        console.log('CHECKING')
+
         if (state.data.password !== e.target.value) {
             setPasswordMatching(false)
         } else {

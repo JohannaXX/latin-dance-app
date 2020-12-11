@@ -16,7 +16,6 @@ const Network = () => {
     useEffect(() => {
         getNetwork()
             .then( users => {
-                console.log(users);
                 setData(users.orderedUsers) 
                 setNetwork(users.orderedUsers)
                 setShowContacts(true)

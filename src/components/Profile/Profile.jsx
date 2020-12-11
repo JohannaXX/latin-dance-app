@@ -44,7 +44,6 @@ const Profile = (props) => {
     }
 
     const handleUpdatedPerfil = (u) => {
-        console.log(u)
         setUser( prev => {
             return {
                 ...prev,

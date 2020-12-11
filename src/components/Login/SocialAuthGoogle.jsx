@@ -8,7 +8,7 @@ const SocialAuthGoogle = () => {
 
     useEffect(() => {
         const { code } = queryParamsGoogle()
-
+        console.log(code)
         loginWithGoogle(code)
             .then(user => {
                 login(user)

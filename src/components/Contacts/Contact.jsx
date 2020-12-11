@@ -4,7 +4,7 @@ import './Contact.css';
 
 const Contact = ({ id, avatar, name, city, country, bio, style, btnText, btnAction, denyRequest }) => {
     const { windowWidth } = windowDimensions();
-    console.log( windowWidth )
+
     return (
         <div className="user-card align-center">
             <div className="row">
