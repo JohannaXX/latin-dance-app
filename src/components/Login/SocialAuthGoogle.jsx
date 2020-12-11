@@ -3,17 +3,18 @@ import { useAuthContext } from '../../contexts/AuthContext'
 import { queryParamsGoogle } from '../../helpers/helper'
 import { loginWithGoogle } from '../../services/UserClient'
 
-const SocialAuthGoogle = () => {
+const SocialAuthGoogle = (user) => {
     const { login } = useAuthContext()
 
-    useEffect(() => {
+    login(user)
+    /* useEffect(() => {
         const { code } = queryParamsGoogle()
         console.log(code)
         loginWithGoogle(code)
             .then(user => {
                 login(user)
             })
-    }, [login])
+    }, [login]) */
 
     return null
 }

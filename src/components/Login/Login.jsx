@@ -156,12 +156,12 @@ const Login = (props) => {
                                         
                                         <div id="social-login-area" className="text-center mt-3">
                                             <div id="social-login-btns">
-                                                <button
+                                                <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
-                                                    onClick={ handleLoginWithGoogle }
+                                                    href="https://latin-dance-app-backend.herokuapp.com/auth/google"
                                                     >
                                                     <i className="fa fa-google"></i> Log in with Google
-                                                </button>  
+                                                </a>  
 
                                                 <a
                                                     className="btn border border-secondary text-primary m-2 px-2 py-1 rounded"
